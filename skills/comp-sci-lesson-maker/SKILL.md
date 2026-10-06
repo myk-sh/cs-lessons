@@ -1,11 +1,11 @@
 ---
 name: comp-sci-lesson-maker
-description: Create complete computer science lessons - a PowerPoint slide deck, a student worksheet, a separate teacher answer key, and a student booklet that interleaves the key slides with the tasks. Handles programming lessons (students trace code, fill gaps, debug, then build the program) and theory lessons (recall test, diagrams, classify/apply tasks, then real exam questions with official marking points). Built for Cambridge International AS & A Level Computer Science 9618 (Paper 1 theory, Paper 3, Paper 4 programming) and also suits IGCSE/O Level computer science. Use whenever a teacher asks for a computer science lesson, slides, worksheet, booklet, practice or exam questions, mark scheme or answer key on a topic such as networking, hardware, data representation, databases, data structures, recursion or OOP, says "make another lesson like this one", uploads a lesson, textbook pages or past-paper questions, or mentions 9618, Paper 1-4, pseudocode or VB.NET/Python/Java.
+description: Create complete computer science lessons - a PowerPoint slide deck, a student worksheet, a separate teacher answer key, and a student booklet that interleaves the key slides with the tasks. Handles programming lessons (students trace code, fill gaps, debug, then build the program) and theory lessons (recall test, diagrams, classify/apply tasks, then real exam questions with official marking points). Built for Cambridge International AS & A Level Computer Science 9618 (Paper 1 theory, Paper 3, Paper 4 programming) and IGCSE 0478. Use whenever a teacher asks for a CS lesson, slides, worksheet, booklet, exam questions or answer key on a topic such as networking, hardware, data representation, databases, data structures, recursion or OOP, says "make another lesson like this one", uploads a lesson, textbook pages or past-paper questions, or mentions 9618, 0478, a paper number, pseudocode or VB.NET/Python/Java. Also files each finished lesson in the teacher's private GitHub repo myk-sh/cs-lessons.
 ---
 
 # Comp sci lesson maker
 
-This skill produces four matched documents for one lesson:
+This skill produces four matched documents for one lesson, then files them in the teacher's lessons repo (step 10):
 1. **Slide deck (.pptx)** - teaches the concept, shows worked traces and annotated code, and shows how examiners mark it.
 2. **Worksheet (.docx)** - student copy: six tasks of increasing difficulty, **no answers**.
 3. **Answer key (.docx)** - separate teacher copy: answers, marking-point tables and model programs for every task.
@@ -121,7 +121,7 @@ The booklet saves students switching between the slides and the worksheet: **Lea
 `render.sh` installs a fontconfig alias so Roboto Mono/Consolas render as a same-width mono font. Quicksand still renders as a substitute, so leave a little slack in text boxes.
 
 ### 9. Deliver
-Save to `/mnt/user-data/outputs/` with names like `Y13_9618_Lesson_-_<Topic>.pptx`, `<Topic>_Worksheet.docx`, `<Topic>_Answer_Key.docx` and `<Topic>_Student_Booklet.docx` (match the teacher's naming if they have one), then call `present_files` with all four files. In the reply, keep it short:
+Save to `/mnt/user-data/outputs/` with names like `Y13_9618_Lesson_-_<Topic>.pptx`, `<Topic>_Worksheet.docx`, `<Topic>_Answer_Key.docx` and `<Topic>_Student_Booklet.docx` (match the teacher's naming if they have one), then send all four files to the teacher. In the reply, keep it short:
 - the lesson and worksheet flow;
 - which official mark schemes were used, and anything that changed because of them;
 - any errors found in published answers;
@@ -129,6 +129,32 @@ Save to `/mnt/user-data/outputs/` with names like `Y13_9618_Lesson_-_<Topic>.ppt
 - anything the teacher may want to edit (e.g. the "Next lesson" line).
 
 If you run low on tool calls, write the files and present them before polishing. An unpresented file is invisible to the teacher.
+
+### 10. File the lesson in the lessons repo
+Every finished lesson also goes into the teacher's private GitHub repo **`myk-sh/cs-lessons`**, organised by syllabus and paper. Do this without being asked, right after delivering the files.
+
+Layout:
+```
+README.md                     index table of every lesson
+0478 P1/<Topic>/              IGCSE Paper 1 (theory)
+0478 P2/<Topic>/              IGCSE Paper 2 (problem solving and programming)
+9618 P1/<Topic>/ ... 9618 P4/<Topic>/
+skills/comp-sci-lesson-maker/ this skill (source + packaged .skill)
+```
+- **Folder:** `<syllabus> P<paper>/<Topic in Title Case with spaces>/`, e.g. `9618 P4/Binary Trees/`, `0478 P1/Packet Switching/`. Pick the paper the content is examined on (9618 programming ADTs → P4; 9618 networking → P1; 0478 theory → P1, algorithms/programming → P2). If a lesson really spans two papers, use the main one and mention the other in the README row. Create a paper folder if it doesn't exist, and delete its placeholder `README.md` once it holds a lesson.
+- **Files:** the four delivered files with their delivered names (deck, worksheet, answer key, booklet). Add the teacher's own uploaded lesson for the topic only if they ask.
+- **Index:** add a row to the matching table in the root `README.md` - `| P<n> | [<Topic>](<url-encoded path, spaces as %20>) | <Year> | <syllabus ref and short description> |` - keeping rows grouped by paper. Replace a "*(none yet)*" row.
+- **Updated lesson:** if the topic already exists, overwrite its files in place (git keeps the history) rather than making a second folder.
+- **Skill changes:** if this skill was changed during the session, copy the new version into `skills/comp-sci-lesson-maker/` and rebuild `comp-sci-lesson-maker.skill` in the same commit.
+- **Commit and push** to `main`, with a message like `Add 9618 P4 lesson: Hash Tables`. Use the teacher as author (their name and email) when the session knows them.
+- **Never** put student data (names, marks, scanned scripts) in the repo.
+
+Getting access (try in this order):
+1. Repo tools in the session (e.g. `add_repo` with owner `myk-sh`, repo `cs-lessons`, push access), then `git clone --depth 1 https://github.com/myk-sh/cs-lessons`. Run `git fetch origin main` and rebase before pushing, so a shallow clone doesn't push the whole tree again.
+2. Git on the teacher's linked computer, if the session has it.
+3. If neither works, still deliver the files, and tell the teacher in one line that the repo wasn't updated and what access is missing. A missing repo connection never blocks the lesson.
+
+In the final reply, add one line saying where the lesson was filed (e.g. "Filed in cs-lessons → 9618 P4/Hash Tables").
 
 ## Theory lessons
 
