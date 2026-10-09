@@ -28,6 +28,7 @@ Each lesson folder holds:
 | P4 | [Stacks](9618%20P4/Stacks) | Y13 | ADTs: stacks (VB.NET) |
 | P4 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 | ADTs: linked lists (VB.NET) |
 | P4 | [Binary Trees](9618%20P4/Binary%20Trees) | Y13 | ADTs: binary trees (VB.NET) |
+| P4 | [Tree Traversals](9618%20P4/Tree%20Traversals) | Y13 | Follow-up to Binary Trees: pre/in/post-order by hand, tracing recursion with a call stack, uses of binary trees (also covers Paper 3 tree and recursion questions) |
 
 ## Skill
 
