@@ -215,6 +215,11 @@ Web image hosts are usually blocked from the sandbox, so pictures come from what
 2. Crop each figure or photo with PIL, then auto-trim white borders and remove captions/stray text lines. Always view a contact sheet of the crops and re-crop until each is clean - crop boxes estimated from the page layout are usually off by a strip.
 3. Record pixel sizes in a JSON file and place images with an aspect-preserving `pic()` helper (fit inside a box, centre, light frame) - see `references/examples/au_deck.js`. Never stretch an image.
 4. Add a small credit caption (e.g. "Images: <textbook>, Chapter n") on at least one slide, and tell the teacher the pictures came from their uploaded book.
+5. **Photos from the web (e.g. real hardware).** When the textbook has too few pictures, use Wikimedia Commons through the browser pane (built-in browser) on the teacher's computer:
+   - query the Commons API from the page with `fetch(...&origin=*)` for freely licensed images, including their licence and author;
+   - show each chosen image filling a white page and take a full-scale screenshot (screenshots are saved as files under the session's `tool-results`);
+   - trim the white margins with PIL;
+   - put a small credit under each photo and a credits slide (title, author, licence) at the end. Use only CC / public-domain images.
 
 ## Using a teacher's question pack
 Packs compiled from past papers often repeat pages and mix in parts from other topics. Extract the text (`pdftotext -layout`), list every question with its paper code and marks, keep only the parts on this lesson's topic, and use them verbatim with the paper cited under each part. Take the official marking points from the supplied mark scheme for the answer key, and list the unused off-topic parts at the end of the key so the teacher can reuse them.
