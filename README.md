@@ -22,6 +22,7 @@ Each lesson folder holds:
 |---|---|---|---|
 | P1 | [Topologies and Cloud](9618%20P1/Topologies%20and%20Cloud) | Y12 | 2.1 Networks: topologies, public and private cloud |
 | P1 | [Wired and Wireless](9618%20P1/Wired%20and%20Wireless) | Y12 | 2.1.5 Wired and wireless networking (~30 min) |
+| P1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 | 2.1.6 LAN hardware (switch, server, NIC, WNIC, WAP, cables, bridge, repeater) and the router |
 | P4 | [Queues](9618%20P4/Queues) | Y13 | ADTs: queues (original lesson) |
 | P4 | [Stacks](9618%20P4/Stacks) | Y13 | ADTs: stacks (VB.NET) |
 | P4 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 | ADTs: linked lists (VB.NET) |
