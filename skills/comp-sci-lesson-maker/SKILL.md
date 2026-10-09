@@ -112,7 +112,7 @@ The booklet saves students switching between the slides and the worksheet: **Lea
 8. Add `pageBreak()` before major Learn sections, but not after a short task part - that leaves a nearly empty page. Render and remove breaks that waste space. Put `keepNext` on a prompt that is followed by a writing box.
 
 ### 8. QA – always render and look
-1. `node deck.js && python /mnt/skills/public/pptx/scripts/office/validate.py deck.pptx`
+1. `node deck.js && python scripts/fix_ppr.py deck.pptx && python /mnt/skills/public/pptx/scripts/office/validate.py deck.pptx`. **Always run `fix_ppr.py`.** When `addText` gets several runs in one paragraph (e.g. a bold label run + a normal run, or a caption + credit), pptxgenjs writes one `<a:pPr>` per run. PowerPoint then refuses to open the file ("Sorry, PowerPoint can't read..."), even though LibreOffice renders it and the validator passes. The script keeps only the first `<a:pPr>` in each paragraph. Never pass an empty-string run either.
 2. `scripts/render.sh deck.pptx d` and `scripts/render.sh sheet.docx w`, then `view` each `*grid*.jpg`.
 3. Render every document (deck, worksheet, answer key, booklet). Look for: titles wrapping into two lines (shorten them – the title box sits beside the pill), text overflowing cards, labels running off the slide edge, code lines wrapping, tables splitting awkwardly across worksheet pages (make wide data tables horizontal), and large empty areas.
 4. In the booklet also check: no answer-revealing slide shares a page with the task before it, captions are next to their slide, and code in the slide images is legible.
