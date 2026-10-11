@@ -33,3 +33,9 @@ Each lesson folder holds:
 ## Skill
 
 [`skills/comp-sci-lesson-maker`](skills/comp-sci-lesson-maker) is the Claude skill used to make these lessons. It includes the source (SKILL.md, scripts, references and worked examples) and the packaged `comp-sci-lesson-maker.skill`, ready to upload to Claude.
+
+## Web viewer
+
+The [lesson viewer](viewer/README.md) provides browser previews of slides, worksheets and student booklets, with search, syllabus/paper filters, and original-file downloads. Office files are converted to PDFs during the build. Teacher answer keys are excluded from the published site.
+
+Build with `python3 scripts/build_viewer.py`; see the viewer guide for local use and GitHub Pages deployment through the included Actions workflow.

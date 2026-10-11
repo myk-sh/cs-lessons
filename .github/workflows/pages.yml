@@ -1,0 +1,58 @@
+name: Lesson viewer
+on:
+  push:
+    branches: [main]
+    paths:
+      - '0478 P*/**'
+      - '9618 P*/**'
+      - 'viewer/**'
+      - 'scripts/build_viewer.py'
+      - 'tests/**'
+      - '.github/workflows/pages.yml'
+  pull_request:
+    paths:
+      - '0478 P*/**'
+      - '9618 P*/**'
+      - 'viewer/**'
+      - 'scripts/build_viewer.py'
+      - 'tests/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lesson-pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install document renderer and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-impress libreoffice-writer fonts-quicksand fonts-dejavu fonts-roboto-unhinted
+          mkdir -p ~/.config/fontconfig
+          cp skills/comp-sci-lesson-maker/scripts/fonts.conf ~/.config/fontconfig/fonts.conf
+      - name: Test catalogue and publication boundaries
+        run: python3 -m unittest discover -s tests -v
+      - name: Build viewer (student materials only)
+        run: python3 scripts/build_viewer.py
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
