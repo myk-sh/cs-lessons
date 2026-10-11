@@ -2,6 +2,8 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+from unittest.mock import patch
+import subprocess
 import unittest
 
 spec = importlib.util.spec_from_file_location('builder', Path(__file__).resolve().parents[1] / 'scripts/build_viewer.py')
@@ -49,6 +51,30 @@ class ViewerBuildTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'Invalid PDF'):
                 builder.build(root, out, 'missing-soffice')
             self.assertEqual((out / docs[0]['pdf']).read_bytes(), b'%PDF-1.4\nstudent')
+
+    def test_office_exports_are_publicly_readable_without_changing_sources(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / 'repo'
+            folder = root / '9618 P1' / 'Networks'
+            folder.mkdir(parents=True)
+            source = folder / 'Worksheet.docx'
+            source.write_bytes(b'office input')
+            source.chmod(0o600)
+            out = Path(temporary) / 'site'
+
+            def convert(command, **kwargs):
+                exported = Path(command[command.index('--outdir') + 1]) / 'original.pdf'
+                exported.write_bytes(b'%PDF-1.4\nconverted')
+                exported.chmod(0o600)
+                return subprocess.CompletedProcess(command, 0, stdout='', stderr='')
+
+            with patch.object(builder.subprocess, 'run', side_effect=convert):
+                builder.build(root, out, 'soffice')
+            for path in [out, *out.rglob('*')]:
+                expected = 0o755 if path.is_dir() else 0o644
+                self.assertEqual(path.stat().st_mode & 0o777, expected, path)
+            self.assertEqual(source.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(source.read_bytes(), b'office input')
 
     def test_refuses_to_overwrite_source_or_unrelated_directory(self):
         with tempfile.TemporaryDirectory() as temporary:

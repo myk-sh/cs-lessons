@@ -34,3 +34,9 @@ The `dist/` directory is generated and ignored by Git. A build stages all conver
 The workflow installs LibreOffice and fonts, checks discovery/publication behavior, converts every student material, uploads only `dist/`, and deploys on `main`. All asset URLs are relative so project sites under `/cs-lessons/` work.
 
 GitHub Pages is available for public repositories on GitHub Free; publishing from a private repository requires a supported paid plan. A Pages site is normally public even if its source repository is private. If Pages is unavailable for this repository, the same `dist/` folder can be hosted on another static host. No repository visibility change or deployment has been performed by adding these files.
+
+## Troubleshoot Pages 404s
+
+If the homepage displays the repository README and links such as `/cs-lessons/9618%20P1/Topologies%20and%20Cloud/` return 404, Pages is serving the repository files instead of the generated viewer. Lesson folders contain Office documents, not an `index.html` web page. Select **GitHub Actions** under **Settings → Pages → Build and deployment**, then run the **Lesson viewer** workflow on `main`. The published homepage should show the searchable **Lesson Library**, and its preview/download links should point into `materials/`.
+
+Check that both the workflow's build and deploy jobs succeeded. A failed workflow leaves the previously published site in place. The deployment artifact must come from `dist/`; do not publish the repository root or the `viewer/` source directory. The builder gives published files mode `644` and directories mode `755`, including LibreOffice exports that initially have owner-only permissions.

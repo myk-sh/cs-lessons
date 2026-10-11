@@ -94,6 +94,11 @@ def build(root, output, soffice, include_answer_keys=False):
                     document['pdf'] = pdf.relative_to(site).as_posix()
                     print(f"Converted {lesson['title']}: {document['label']}", flush=True)
         (site / 'catalog.json').write_text(json.dumps({'lessons': lessons}, indent=2) + '\n')
+        # Office exports and restrictive build umasks can produce owner-only files.
+        # Pages must be able to traverse directories and read every published asset.
+        site.chmod(0o755)
+        for path in site.rglob('*'):
+            path.chmod(0o755 if path.is_dir() else 0o644)
         if output.exists():
             shutil.rmtree(output)
         shutil.copytree(site, output)
