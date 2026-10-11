@@ -16,3 +16,7 @@ node scripts/lessons/ai.js documents '/workspace/lesson-tools/ai-lesson' '/works
 ```
 
 Review the rendered deck and all three documents before copying final files to `0478 P1/Artificial Intelligence/`. The website automatically includes the deck, worksheet and booklet. It excludes the answer key.
+
+## AI visual revision
+
+The deck uses original robot-arm, printer, email and leaf illustrations plus Lucide line icons (ISC licence). Editable PowerPoint shapes and labels explain expert-system information flow, rule matching and the training/test split. Source SVGs, PNGs, icon licence and the illustration renderer are in `assets/ai/`; rebuild images with `python3 assets/ai/render_assets.py` after installing `cairosvg`. The schematic leaves are not diagnostic photographs. The supplied PDF informed the content; its artwork was redrawn rather than cropped.

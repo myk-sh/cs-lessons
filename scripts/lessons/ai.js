@@ -13,6 +13,7 @@ fs.mkdirSync(output, {recursive:true});
 const file = name => path.join(output,name);
 const subtitle = 'IGCSE Computer Science 0478 | 6.3 Artificial intelligence';
 const source = 'Source: teacher-supplied Hodder Cambridge IGCSE Computer Science extract, section 6.3, printed pp. 241–249. Original diagrams and activities. Questions and marking points are suggested, not verified official Cambridge questions.';
+const artwork = path.join(__dirname, 'assets', 'ai');
 const pres = L.newDeck('Artificial intelligence');
 let number=0;
 function slide(title,pill,notes) { return L.base(pres,title,pill,++number,notes+'\n'+source); }
@@ -30,6 +31,17 @@ function card(s,title,body,x,y,ww=3.65,hh=2.1) {
 function note(s,t) {L.callout(s,t,{x:.75,y:6.15,w:11.7,h:.48,fontSize:15});}
 function tbl(s,rows,colW,y=1.7,fs=16,rowH=.7) {L.table(s,rows,{x:.75,y,w:11.8,colW,fontSize:fs,rowH});}
 function arrow(s,x1,y1,x2,y2) {L.arrow(pres,s,x1,y1,x2,y2);}
+function pic(s,name,x,y,ww,hh=ww) {s.addImage({path:path.join(artwork,name+'.png'),x,y,w:ww,h:hh,altText:name.replaceAll('-',' ')});}
+function panel(s,x,y,ww,hh,color=L.C.band) {s.addShape(pres.shapes.ROUNDED_RECTANGLE,{x,y,w:ww,h:hh,rectRadius:.15,fill:{color},line:{color,width:0}});}
+function tag(s,t,x,y,ww,color=L.C.navy) {panel(s,x,y,ww,.4,color);text(s,t,x+.08,y+.06,ww-.16,.28,13,{bold:true,color:'FFFFFF',align:'center'});}
+function label(s,t,x,y,ww,size=19) {text(s,t,x,y,ww,.65,size,{bold:true,color:L.C.navy,align:'center'});}
+function mail(s,x,y,kind,small=false,sample='') {
+ const ww=small?1.28:2.55,hh=small?.73:1.25;
+ panel(s,x,y,ww,hh,kind==='spam'?'FFF0D5':'E4F1EA');
+ pic(s,'mail',x+.09,y+.1,small?.42:.65);
+ text(s,small?(kind==='spam'?'SPAM':'LEGIT'):(kind==='spam'?'WIN a prize':'Class project'),x+(small?.57:.88),y+.12,ww-(small?.63:1),small?.25:.45,small?11:17,{bold:true,color:L.C.navy});
+ text(s,small?sample:(kind==='spam'?'Known label: SPAM':'Known label: LEGITIMATE'),x+(small?.57:.15),y+(small?.44:.85),ww-(small?.63:.3),.26,small?9:12,{color:L.C.navy});
+}
 function deck() {
  let s=pres.addSlide(); number++;
  s.background={color:L.C.white};
@@ -37,7 +49,10 @@ function deck() {
  text(s,'Artificial\nintelligence',.73,2.35,7.5,1.8,46,{bold:true});
  text(s,'IGCSE 0478 · Paper 1 · 6.3',.75,4.42,7.2,.5,20,{color:L.C.grey});
  text(s,'Rules. Reasoning. Learning.',.75,5.1,7.2,.5,20,{color:L.C.navy});
- text(s,'AI',9.3,2.4,3.2,1.2,80,{bold:true,color:L.C.navy,align:'center'});
+ pic(s,'brain-circuit',9.35,1.6,2.9);
+ tag(s,'EXPERT RULES',9.1,4.95,3.6);
+ tag(s,'LEARNED PATTERNS',9.1,5.6,3.6);
+ text(s,'How does a computer decide?',.75,5.85,7.2,.5,19,{bold:true,color:L.C.navy});
  s.addNotes('60-minute theory lesson after Robotics (6.2). Suggested timings: recall 6 min; AI 7 min; expert systems 18 min; ML 16 min; compare/exit 8 min; discussion buffer 5 min. Task 6 may be homework. Pause slides before practice; do not reveal answers from notes. '+source);
  s=slide('Recall: robotics','Starter · 6 min','Do Task 1 closed book before teaching AI. Use the separate key to review. If fewer than 2/3 on robot characteristics or 2/4 on the safety chain, recap those ideas. Total 15 suggested marks.');
  tbl(s,[['Recall focus','Marks'],['Three characteristics of a robot','3'],['Sensor → microprocessor → actuator','3'],['A factory benefit and a drawback','4'],['Stopping safely + autonomous meaning','5']],[9.9,1.9],1.65,18,.7);
@@ -45,17 +60,19 @@ function deck() {
  s=slide('In this lesson, you will','Objectives','Show the 5 outcomes and how the tasks fit them.');
  [['Define AI','Rules/data, reasoning, learning and adapting'],['Map an expert system','Explain four core components'],['Apply IF–THEN rules','Trace how evidence leads to a conclusion'],['Explain machine learning','Training examples → patterns → predictions'],['Evaluate an AI decision','Benefits, limitations and human checking']].forEach((r,i)=>L.stepCard(pres,s,i+1,r[0],r[1],{x:.75,y:1.45+i*1.0,w:11.8,h:.95,hs:17,ds:14}));
  s=slide('What makes a system AI?','Activity 1','Definition: simulation of intelligent human behaviour by a computer. Core characteristics: rules and data; ability to reason, learn and adapt to external stimuli. Not every AI system learns during use. Do not teach the textbook claim that every cognitive function can be replicated as established fact.');
- card(s,'Rules & data','Knowledge, examples and instructions provide the basis.',.75,1.65,5.65,1.85);
- card(s,'Reasoning','Use evidence to reach a conclusion or make a decision.',6.75,1.65,5.65,1.85);
- card(s,'Learning','Identify patterns from examples or past experience.',.75,3.78,5.65,1.85);
- card(s,'Adapting','Change responses or processes as circumstances change.',6.75,3.78,5.65,1.85);
+ [['database','Rules & data','Facts, examples and instructions'],['lightbulb','Reasoning','Evidence → a conclusion'],['brain-circuit','Learning','Examples → useful patterns'],['settings','Adapting','Changed conditions → changed response']].forEach((r,i)=>{
+ const x=i%2?6.8:.75,y=i<2?1.65:3.78;
+ panel(s,x,y,5.6,1.82);pic(s,r[0],x+.18,y+.37,.95);
+ text(s,r[1],x+1.4,y+.28,3.95,.5,23,{bold:true,color:L.C.navy});text(s,r[2],x+1.4,y+.95,3.9,.65,18);
+ });
  note(s,'AI simulates intelligent human behaviour; it does not prove human understanding.');
+
  s=slide('Automation is not always AI','Think · pair · share','Use three examples. A fixed repeating robot program is automated but need not learn or adapt. Expert systems are AI even when their rules do not change. ML is one way to implement AI. Ask students to explain the basis of the decision rather than just say “smart”.');
- card(s,'Fixed robot arm','Repeats the same stored movement sequence.',.75,1.9);
- card(s,'Fault adviser','Applies expert IF–THEN rules to answers.',4.85,1.9);
- card(s,'Image classifier','Learns patterns from labelled images.',8.95,1.9);
- text(s,'Which system repeats instructions? Which uses expert rules? Which learns from examples?',.85,4.7,11.6,1,23);
- note(s,'Now do Task 2. Explain the behaviour, not just the device name.');
+ pic(s,'robot-arm',.75,1.6,3.7,2.78);pic(s,'printer-scene',4.85,1.6,3.7,2.78);pic(s,'leaf-healthy',8.95,1.6,3.7,2.78);
+ label(s,'Repeat a movement',.75,4.55,3.7);label(s,'Follow expert rules',4.85,4.55,3.7);label(s,'Learn image patterns',8.95,4.55,3.7);
+ text(s,'Which uses AI? What evidence supports your choice?',.85,5.35,11.6,.6,24,{bold:true});
+ note(s,'Look at what the system does—not just the device name. Then do Task 2.');
+
  s=slide('AI: a family of approaches','Activity 1','Draw a containment diagram: expert systems and machine learning are approaches within AI, not synonyms for all AI. They can be combined; do not claim mutually exclusive technologies. Not all robots use AI, and AI can be software without a physical robot.');
  s.addShape(pres.shapes.ROUNDED_RECTANGLE,{x:.9,y:1.6,w:11.5,h:4.3,fill:{color:L.C.soft},line:{color:L.C.navy,width:2}});
  text(s,'ARTIFICIAL INTELLIGENCE',1.15,1.85,10.6,.6,25,{bold:true,color:L.C.navy,align:'center'});
@@ -63,65 +80,98 @@ function deck() {
  card(s,'Machine learning','Examples → learned patterns and a model',7,2.8,4.6,2.1);
  note(s,'AI is the broad field. Machine learning is a subset of AI.');
  s=slide('Expert systems: expertise on tap','Activity 2','An expert system mimics the knowledge and decision-making of a human expert in a particular domain. It has a restricted domain and is only as good as its knowledge, rules and input. Examples: equipment fault diagnosis, mineral prospecting, financial advice.');
- card(s,'Expert knowledge','Technicians explain common printer faults.',.75,1.8);
- arrow(s,4.5,2.8,4.83,2.8);
- card(s,'Computer system','Stores the knowledge and applies rules.',4.85,1.8);
- arrow(s,8.6,2.8,8.92,2.8);
- card(s,'Advice for a user','Suggests a cause and an action to take.',8.95,1.8);
- tbl(s,[['Other applications','Expertise needed'],['Oil / mineral prospecting','Geological evidence'],['Medical decision support','Clinical knowledge (human oversight)']],[5.4,6.4],4.35,16,.6);
+ panel(s,.75,1.65,3.4,3.8);pic(s,'user-round',1.75,1.9,1.35);label(s,'Human expert',.9,3.55,3.1);text(s,'Provides facts and rules\nabout a specific domain.',1.05,4.2,2.85,.9,18,{align:'center'});
+ panel(s,4.9,1.65,3.4,3.8);pic(s,'cpu',5.9,1.9,1.35);label(s,'Expert system',5.05,3.55,3.1);text(s,'Applies the expertise\nto the user’s evidence.',5.2,4.2,2.85,.9,18,{align:'center'});
+ panel(s,9.05,1.65,3.4,3.8);pic(s,'wrench',10.05,1.9,1.35);label(s,'Advice',9.2,3.55,3.1);text(s,'Suggests a fault\nand what to check.',9.35,4.2,2.85,.9,18,{align:'center'});
+ arrow(s,4.2,3.1,4.8,3.1);arrow(s,8.35,3.1,8.95,3.1);
+ note(s,'Equipment faults • mineral prospecting • medical decision support. Expertise is domain-specific.');
+
  s=slide('Inside an expert system','Activity 2','Four core components: user interface, knowledge base, rules base, inference engine. Explanation facility is useful supporting enrichment, not required as a fifth core item in Task 3(a). Diagram arrows show information flows, not a mandatory execution order.');
- card(s,'User interface','Accepts user answers; displays questions and advice.',.75,2.65,3.1,2);
- card(s,'Inference engine','Matches facts and applies rules to draw a conclusion.',4.8,2.65,3.7,2);
- card(s,'Knowledge base','Stores expert facts about the domain.',9.1,1.55,3.4,1.7);
- card(s,'Rules base','Stores IF–THEN rules for drawing conclusions.',9.1,4.1,3.4,1.7);
- arrow(s,3.9,3.55,4.75,3.55);arrow(s,9.05,2.8,8.55,3.2);arrow(s,9.05,4.55,8.55,4);
- note(s,'Facts are not rules. The inference engine uses both.');
+ panel(s,.75,2.4,3,2.7);pic(s,'user-round',1.8,2.65,.85);label(s,'User interface',.9,3.65,2.7);text(s,'Questions in\nAdvice out',1,4.25,2.5,.75,18,{align:'center'});
+ panel(s,4.7,2.4,3.3,2.7,'E9E8F5');pic(s,'cpu',5.85,2.65,.85);label(s,'Inference engine',4.85,3.65,3);text(s,'Matches evidence\nand applies rules',5,4.25,2.7,.75,18,{align:'center'});
+ panel(s,9.3,1.55,3.2,1.9);pic(s,'database',9.5,1.75,.62);text(s,'Knowledge base',10.25,1.8,2.15,.75,19,{bold:true,color:L.C.navy});text(s,'Expert facts',9.65,2.75,2.5,.45,17);
+ panel(s,9.3,4.25,3.2,1.65);pic(s,'list-filter',9.5,4.45,.62);text(s,'Rules base',10.25,4.5,2.1,.5,19,{bold:true,color:L.C.navy});text(s,'IF–THEN rules',9.65,5.25,2.5,.45,17);
+ arrow(s,3.8,3.3,4.6,3.3);arrow(s,4.6,4.3,3.8,4.3);arrow(s,9.25,2.6,8.05,3.1);arrow(s,9.25,4.9,8.05,4.35);
+ note(s,'Facts describe the domain. Rules express expertise. The engine uses both.');
+
  s=slide('Facts and rules do different jobs','Activity 2','Worked demonstration uses a printer, separate from worksheet laptop cases. Facts: no paper, power light on. Rules: IF power off THEN check supply; IF power on AND no paper THEN load paper. No match should not be treated as proof of “no fault”.');
- tbl(s,[['Part','Printer example'],['Knowledge base / facts','Power light: ON. Paper tray: EMPTY.'],['Rules base','IF power is on AND tray is empty THEN advise “load paper”.'],['Inference engine','Matches the evidence to the rule and selects advice.'],['User interface','Asks about the tray and displays the advice.']],[3.8,8],1.75,17,.85);
+ pic(s,'printer-scene',.75,1.6,5.5,4.12);
+ tag(s,'OBSERVED FACTS',.95,5.2,2.35);text(s,'Light ON · tray EMPTY',3.5,5.25,3,.5,17,{bold:true});
+ panel(s,7,1.65,5.35,1.1);pic(s,'database',7.2,1.9,.55);text(s,'FACT: the paper tray is empty.',8,1.98,4,.5,19,{bold:true});
+ panel(s,7,3,5.35,1.9);pic(s,'list-filter',7.2,3.2,.55);text(s,'RULE',8,3.2,3.95,.5,19,{bold:true,color:L.C.navy});text(s,'IF power is on AND tray is empty\nTHEN advise “load paper”.',7.25,3.9,4.85,.85,19);
  note(s,'A fact describes what is known. A rule says what to infer if conditions match.');
+
  s=slide('Trace a rule before you trust it','Activity 2','Worked example rules: R1 power light off → check power cable; R2 power light on AND paper empty → load paper; R3 power light on AND paper present AND jam → clear jam. Given light on, paper empty, jam no: R2 matches. Do not substitute worksheet inputs.');
- tbl(s,[['Rule','Condition','Advice'],['R1','Light OFF','Check power cable'],['R2','Light ON and paper EMPTY','Load paper'],['R3','Light ON, paper PRESENT and jam YES','Clear paper jam']],[1.2,6.3,4.3],1.7,17,.8);
- card(s,'Evidence','Light ON · paper EMPTY · jam NO',.9,5.2,7.5,.8);
- text(s,'Which rule matches?',9,5.3,3.2,.5,19,{bold:true,color:L.C.navy});
+ tag(s,'LIGHT ON',.85,1.5,2);tag(s,'TRAY EMPTY',3.15,1.5,2.5);tag(s,'JAM NO',5.95,1.5,2);
+ [['R1','Light OFF','Check power cable'],['R2','Light ON + tray EMPTY','Load paper'],['R3','Light ON + tray PRESENT + jam YES','Clear jam']].forEach((r,i)=>{
+ const y=2.25+i*1.08;panel(s,.85,y,8.1,.9);tag(s,r[0],1.03,y+.22,.7);text(s,r[1],2,y+.2,6.6,.55,19);
+ arrow(s,9.05,y+.43,9.6,y+.43);text(s,r[2],9.85,y+.15,2.6,.65,18,{bold:true,color:L.C.navy});
+ });
+ text(s,'Point to each condition. Which row matches all the evidence?',.9,5.7,11.5,.6,22,{bold:true});
+
  s=slide('Explain the advice','Activity 2','Show after the worked trace. R2 matches because the light is on and tray empty. Explanation facility exposes those reasons. This does not guarantee correctness. Inputs might be wrong or rules missing. Pause for Task 3; then Task 4(a).');
- card(s,'Evidence','The printer is powered on. There is no paper in the tray.',.75,1.9);
- card(s,'Rule matched','R2: powered on + empty tray → load paper.',4.85,1.9);
- card(s,'Explain','“Load paper because the printer is on but its tray is empty.”',8.95,1.9);
- note(s,'A conclusion should follow evidence and rules—not guesswork. Do Tasks 3 and 4(a).');
+ pic(s,'printer-scene',.75,1.75,3.55,2.66);
+ panel(s,4.8,1.75,7.5,2.66,'E9E8F5');text(s,'“Load paper.”',5.15,2.1,6.8,.65,32,{bold:true,color:L.C.navy});text(s,'Because the printer is ON\nand its tray is EMPTY.',5.15,3.05,6.7,1.1,25);
+ arrow(s,4.35,3.05,4.75,3.05);
+ tag(s,'EVIDENCE',.9,4.95,2.4);arrow(s,3.45,5.15,4.1,5.15);tag(s,'R2 MATCHES',4.3,4.95,3);arrow(s,7.5,5.15,8.15,5.15);tag(s,'EXPLAINED ADVICE',8.4,4.95,3.85);
+ note(s,'Showing the reason does not guarantee the advice is correct. Do Tasks 3 and 4(a).');
+
  s=slide('Build and test an expert system','Activity 2','Gather expertise from humans/written sources; create facts in knowledge base and inference rules in rules base; develop engine and UI; test known cases and compare with expected conclusions. Test unmatched/conflicting rules too.');
- [['Collect expertise','Interview experts; use reliable written sources.'],['Store facts and rules','Create the knowledge base and rules base.'],['Connect the engine and interface','Ask useful questions and display advice.'],['Test known cases','Compare outputs with agreed expert conclusions.']].forEach((r,i)=>L.stepCard(pres,s,i+1,r[0],r[1],{x:.8,y:1.65+i*1.05,w:11.6,h:.9,hs:18,ds:15}));
- note(s,'If known cases give incorrect advice, correct the facts or rules and retest.');
+ [['user-round','1 · Collect expertise','Interview experts.\nCheck written sources.'],['database','2 · Store knowledge','Create the facts\nand IF–THEN rules.'],['cpu','3 · Connect','Engine + interface\nturn input into advice.'],['file-check','4 · Test','Known cases →\nexpected conclusions.']].forEach((r,i)=>{
+ const x=.75+i*3.03;panel(s,x,1.85,2.73,3.9);pic(s,r[0],x+.77,2.13,1.2);label(s,r[1],x+.1,3.75,2.53,18);text(s,r[2],x+.2,4.55,2.33,1,17,{align:'center'});if(i<3)arrow(s,x+2.75,3.1,x+3,3.1);
+ });
+ note(s,'Test failures and unmatched cases too. Correct facts/rules, then retest.');
+
  s=slide('Benefits need a matching limit','Activity 2','Pair each benefit with its limitation. Decision support not replacement of all expert responsibility. Expert systems usually do not learn by themselves. Do Task 4(b).');
  tbl(s,[['Potential benefit','Why checking still matters'],['Consistent use of stored rules','A consistently wrong rule gives consistently wrong advice.'],['Available when an expert is not','Unusual cases may not be covered by the knowledge.'],['Fast access to specialist knowledge','Incorrect input can lead to the wrong conclusion.'],['Knowledge shared across locations','Experts must maintain and update facts and rules.']],[5.9,5.9],1.65,17,.85);
  s=slide('Machine learning: learn a pattern','Activity 3','ML is a subset of AI. Algorithms are trained using examples to learn patterns and make predictions/decisions on new data, rather than explicitly programming every new case. Training does not imply continuous learning during every prediction. Labelled examples are one method (this lesson uses supervised learning), not a requirement of all ML.');
- card(s,'Training examples','Past emails labelled spam or legitimate.',.75,1.9);
- arrow(s,4.5,2.8,4.83,2.8);
- card(s,'Learned model','Finds useful patterns across the examples.',4.85,1.9);
- arrow(s,8.6,2.8,8.92,2.8);
- card(s,'Unseen email','Predicts a class for a message it has not seen.',8.95,1.9);
- note(s,'It learns from examples. It does not need a separate hand-written rule for every email.');
+ panel(s,.75,1.7,3.5,3.95);mail(s,1,2.05,'spam');mail(s,1.3,3.55,'legitimate');label(s,'Labelled examples',.9,4.98,3.2,20);
+ panel(s,4.9,1.7,3.4,3.95,'E9E8F5');pic(s,'brain-circuit',5.95,2.2,1.3);label(s,'Train a model',5,3.85,3.2,22);text(s,'Learn patterns\nacross examples.',5.15,4.6,2.9,.9,18,{align:'center'});
+ panel(s,9,1.7,3.5,3.95);pic(s,'mail',10.1,2.05,1.15);label(s,'Unseen email',9.15,3.65,3.2,22);tag(s,'PREDICT A CLASS',9.35,4.65,2.8);
+ arrow(s,4.3,3.4,4.8,3.4);arrow(s,8.35,3.4,8.9,3.4);
+ note(s,'Training learns the model. Prediction uses it. Labelled examples are one learning approach.');
+
  s=slide('Training is not the final test','Activity 3','Keep held-out test examples separate from training. Using the same examples can hide memorisation and overstate performance. Example training emails are made up. Worksheet uses image classification rather than exact email data.');
- tbl(s,[['Stage','Email-filter example'],['Collect and prepare','Examples from many senders; correct labels; useful email features.'],['Train','Learn patterns linking email content to spam / legitimate labels.'],['Evaluate separately','Predict labels of held-out emails and compare with known labels.'],['Improve and deploy','Correct data/model problems, then evaluate again before use.']],[3.6,8.2],1.7,17,.85);
- note(s,'A good score on remembered examples does not prove good predictions on new data.');
+ panel(s,.75,1.7,4.35,3.85,'E4F1EA');label(s,'TRAINING examples',.9,1.95,4.05,23);
+ for(let i=0;i<6;i++)mail(s,1.05+(i%3)*1.29,2.85+Math.floor(i/3)*.9,i%2?'spam':'legitimate',true,`Email ${i+1}`);
+ text(s,'Used to learn patterns',1.05,4.8,3.7,.5,18,{align:'center'});
+ panel(s,8.2,1.7,4.35,3.85,'FFF0D5');label(s,'HELD-OUT TEST examples',8.35,1.95,4.05,20);
+ for(let i=0;i<4;i++)mail(s,8.9+(i%2)*1.45,2.85+Math.floor(i/2)*.9,i%2?'legitimate':'spam',true,`Email ${i+7}`);
+ text(s,'Kept out of training',8.55,4.8,3.6,.5,18,{align:'center'});
+ pic(s,'brain-circuit',5.8,2.5,1.45);label(s,'Model',5.25,4.15,2.65,22);
+ arrow(s,5.15,3.15,5.65,3.15);arrow(s,7.3,3.15,8.1,3.15);
+ note(s,'Use the trained model on test examples. Compare predictions with their known labels.');
+
  s=slide('Errors have real consequences','Activity 3','A spam label is a prediction, not certainty. False positives: real email moved to spam. False negatives: spam reaches inbox. No statistical vocabulary required; focus impact and improvement.');
- tbl(s,[['Actual email','Prediction','What happens?'],['Legitimate homework email','Spam','Student misses an important message.'],['Spam message','Legitimate','Unwanted or harmful message reaches the inbox.']],[3.8,2.9,5.1],1.85,18,1.1);
- card(s,'Improve the evidence','Use accurate labels and varied, representative examples.',1.0,4.9,11.2,1.1);
+ pic(s,'email-scene',.75,1.7,4.75,3.56);
+ panel(s,6,1.7,6.4,1.8,'FFF0D5');pic(s,'triangle-alert',6.2,2.05,.8);text(s,'Real homework email → SPAM',7.2,1.95,4.95,.5,21,{bold:true,color:L.C.navy});text(s,'The student misses the message.',7.2,2.7,4.95,.55,19);
+ panel(s,6,3.85,6.4,1.8,'FFF0D5');pic(s,'triangle-alert',6.2,4.2,.8);text(s,'Spam email → LEGITIMATE',7.2,4.1,4.95,.5,21,{bold:true,color:L.C.navy});text(s,'The unwanted message reaches the inbox.',7.2,4.85,4.95,.55,18);
+ note(s,'Prediction is not certainty. What is the consequence of each mistake?');
+
  s=slide('Data quality changes predictions','Activity 3','Reason about unrepresentative examples, incorrect labels and unfamiliar input; do not promise that more data always fixes performance. Worksheet plant examples A/B/C test correct labels independently.');
- card(s,'Too narrow','All training photos have bright, plain backgrounds.',.75,1.9);
- card(s,'Wrong labels','Some examples are labelled as the wrong class.',4.85,1.9);
- card(s,'Changed conditions','New photos are dark or partly obstructed.',8.95,1.9);
- text(s,'Predict the effect. Then suggest a specific improvement to the training or testing.',.85,4.8,11.5,1.1,22);
- note(s,'Now do Task 5. Explain how a model can be useful without being infallible.');
+ pic(s,'leaf-healthy',.75,1.7,3.7,2.78);pic(s,'leaf-spotted',4.85,1.7,3.7,2.78);pic(s,'leaf-dark',8.95,1.7,3.7,2.78);
+ label(s,'Too narrow',.75,4.65,3.7,22);label(s,'Incorrect labels',4.85,4.65,3.7,22);label(s,'Changed conditions',8.95,4.65,3.7,21);
+ text(s,'Only one species\nin bright light.',.85,5.25,3.5,.7,18,{align:'center'});text(s,'A diseased example\nis labelled “healthy”.',4.95,5.25,3.5,.7,18,{align:'center'});text(s,'New images are dim\nor partly hidden.',9.05,5.25,3.5,.7,18,{align:'center'});
+ note(s,'Illustrative leaves, not diagnostic photos. Predict the effect, suggest an improvement, then do Task 5.');
+
  s=slide('Rules or learned patterns?','Compare','This is a comparison of a conventional rule-based expert system with ML, not a claim that every expert system/ML implementation is identical. The approaches can be combined. Show after Tasks 3–5, not before classification practice.');
- tbl(s,[['Question','Rule-based expert system','Machine learning'],['Where does its knowledge come from?','Experts supply facts and rules.','Algorithms learn patterns from examples.'],['How is a decision reached?','Engine applies stored rules to facts.','Model predicts using learned patterns.'],['How can it improve?','Experts update facts/rules and test.','Improve data/training; evaluate again.'],['What can go wrong?','Missing rules or incorrect input.','Poor data or unfamiliar examples.']],[3.5,4.15,4.15],1.7,15.5,.86);
+ panel(s,.75,1.65,5.6,4.4);panel(s,6.95,1.65,5.6,4.4,'E4F1EA');
+ pic(s,'list-filter',2.95,1.9,1.1);pic(s,'brain-circuit',9.2,1.9,1.1);
+ label(s,'Rule-based expert system',.95,3.2,5.2,24);label(s,'Machine learning',7.15,3.2,5.2,24);
+ text(s,'Human expert supplies knowledge.\nEngine applies stored rules.\nExperts update and test the rules.',1.15,4.05,4.85,1.75,21);
+ text(s,'Examples supply the evidence.\nTraining learns useful patterns.\nImprove data, retrain and test.',7.35,4.05,4.85,1.75,21);
+ note(s,'Either approach can fail. They can also be combined in one system.');
+
  s=slide('Exam technique: explain the link','Exam-style practice','All marks are suggested, not verified official Cambridge allocations. Point + applied explanation. Example: available outside office hours → technicians can get advice on a night shift. Do not reveal Task 6 conclusions; model different printer scenario.');
  card(s,'Name the mechanism','Stored expert rules are applied consistently.',.75,1.9);
  card(s,'Apply to the scenario','Different technicians receive the same advice for the same printer evidence.',4.85,1.9);
  card(s,'Recognise a limit','A missing rule may prevent the system handling a new printer fault.',8.95,1.9);
  note(s,'“It is better” or “it is smarter” is not an explanation.');
  s=slide('Choose, justify, challenge','Task 6 · extension','Do Task 6 independently before discussion. One scenario benefits from auditable fixed policy rules; the other requires learning visual patterns from many labelled images. Accept a justified hybrid. Do not require neural-network implementation.');
- tbl(s,[['Scenario','Questions to ask'],['Library fines under a fixed published policy','Can the knowledge be written as clear rules?'],['Sorting mixed waste from camera images','Do examples reveal patterns too complex to list?']],[5.5,6.3],1.8,18,1.1);
- text(s,'Choose an approach. Explain why. Identify a failure. Suggest a safeguard.',.9,5.65,11.4,.85,24,{bold:true,color:L.C.navy});
+ panel(s,.75,1.65,5.6,3.7);pic(s,'book-open',2.8,1.95,1.3);label(s,'Library fines',.95,3.55,5.2,24);text(s,'A fixed published policy',1.05,4.35,5,.65,21,{align:'center'});
+ panel(s,6.95,1.65,5.6,3.7);pic(s,'recycle',9.05,1.95,1.3);label(s,'Sorting mixed waste',7.15,3.55,5.2,24);text(s,'Camera images of new items',7.25,4.35,5,.65,21,{align:'center'});
+ text(s,'Choose → justify → identify a failure → suggest a safeguard',.95,5.7,11.6,.65,23,{bold:true,color:L.C.navy});
+
  s=slide('Spot the misconception','Plenary','Ask for corrections orally. Expected: not all robots AI; expert facts/rules need updates; prediction not proof; learning subset AI; more data only helps when suitable and correctly prepared. Notes hold answers, student booklet uses a question-only review slide.');
  tbl(s,[['Claim','Your correction'],['Every robot uses AI.','Explain the difference between repeating and learning.'],['An expert system knows everything.','Think about its domain and missing rules.'],['A machine-learning prediction is always correct.','Think about the input and training examples.'],['AI and machine learning mean the same thing.','Use the family diagram.']],[6.4,5.4],1.65,17,.9);
  s=slide('Exit ticket: rules and learning','Exit · 3 min','Suggested answers: KB expert facts; RB IF–THEN rules; inference engine applies rules to facts; ML model trained from examples to predict labels; wrong input/rules or unrepresentative data can cause error. Use as diagnostic, not claimed Cambridge mark scheme.');
@@ -196,7 +246,7 @@ async function documents(imageDir) {
  H2('Exit ticket — suggested responses'),
  P('1. Inference engine. 2. It learns patterns from training examples and uses the trained model to predict a class for an unseen photo. 3. Wrong or missing rules/input; unrepresentative/incorrectly labelled training data; unfamiliar conditions.'),
  H2('Verification and source notes'),
- P('Checked against the supplied extract: AI characteristics (pp. 241–242), expert systems and setup (pp. 243–246), ML and examples (pp. 246–249). Official Cambridge question papers/mark schemes were not accessible during preparation; all questions and mark allocations above are original and suggested. No textbook artwork or uploaded source PDF is redistributed.'),
+ P('Checked against the supplied extract: AI characteristics (pp. 241–242), expert systems and setup (pp. 243–246), ML and examples (pp. 246–249). Official Cambridge question papers/mark schemes were not accessible during preparation; all questions and mark allocations above are original and suggested. No textbook artwork or uploaded source PDF is redistributed. Illustrations are original; line icons are Lucide (ISC licence), with source assets and licence in scripts/lessons/assets/ai. The leaf pictures are schematic illustrations, not diagnostic photographs.'),
  P('Optional textbook extension: deep learning, printed pp. 250–251. This lesson does not require neural-network layers, narrow/general/strong AI categories, or calculation of model-training parameters.'));
  await w.build(K,file('Artificial_Intelligence_Answer_Key.docx'));
  if(!imageDir)throw new Error('Provide rendered slide image directory to build booklet');
