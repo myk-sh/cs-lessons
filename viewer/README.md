@@ -40,3 +40,11 @@ GitHub Pages is available for public repositories on GitHub Free; publishing fro
 If the homepage displays the repository README and links such as `/cs-lessons/9618%20P1/Topologies%20and%20Cloud/` return 404, Pages is serving the repository files instead of the generated viewer. Lesson folders contain Office documents, not an `index.html` web page. Select **GitHub Actions** under **Settings → Pages → Build and deployment**, then run the **Lesson viewer** workflow on `main`. The published homepage should show the searchable **Lesson Library**, and its preview/download links should point into `materials/`.
 
 Check that both the workflow's build and deploy jobs succeeded. A failed workflow leaves the previously published site in place. The deployment artifact must come from `dist/`; do not publish the repository root or the `viewer/` source directory. The builder gives published files mode `644` and directories mode `755`, including LibreOffice exports that initially have owner-only permissions.
+
+## Present slides with a clicker
+
+Choose **Slides**, then **Fullscreen**. The slide fits both the width and height of the screen; page controls remain available. Clickers that send Page Down/Page Up or arrow keys advance/go back. Space also advances; Home/End jump to the first/last slide. These keys work for slides in the normal viewer too and do not interfere with typing in search or selecting filters. A clicker mapped to mouse clicks or custom keys may need its presenter setting changed to Page Down/Page Up.
+
+Use **Exit fullscreen** or the browser's Escape shortcut to return. If native fullscreen is unavailable, the button expands the viewer to fill the browser window; Escape closes this fallback. Word/PDF documents can use fullscreen too, with normal vertical scrolling.
+
+Optional browser regression check (requires Python Playwright and Chromium): after serving `dist/`, run `python3 tests/browser_presenter.py --url http://127.0.0.1:8000/`. Use `--browser-executable /path/to/chromium` to select an installed browser. This checks fullscreen, clicker keys, slide fit, input focus, and the unsupported-browser fallback. The standard Python build tests remain dependency-free.

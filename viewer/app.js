@@ -165,7 +165,11 @@ async function renderPage() {
     const container = $('preview');
     const padding = parseFloat(getComputedStyle(container).paddingLeft) * 2;
     const width = container.clientWidth - padding;
-    const fit = width / page.getViewport({ scale: 1 }).width;
+    const natural = page.getViewport({ scale: 1 });
+    const widthFit = width / natural.width;
+    const isPresentation = selectedDocument.label === 'Slides' && isExpanded();
+    const heightFit = (container.clientHeight - padding) / natural.height;
+    const fit = isPresentation ? Math.min(widthFit, heightFit) : widthFit;
     const scale = fit * Number($('zoom').value);
     const viewport = page.getViewport({ scale });
     const resolution = Math.min(window.devicePixelRatio || 1, 2);
@@ -200,4 +204,54 @@ let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(renderPage, 150);
+});
+
+function isExpanded() {
+  return document.fullscreenElement === $('material-viewer') || $('material-viewer').classList.contains('expanded');
+}
+
+function updateFullscreen() {
+  const expanded = isExpanded();
+  $('fullscreen').textContent = expanded ? 'Exit fullscreen' : 'Fullscreen';
+  $('fullscreen').setAttribute('aria-pressed', String(expanded));
+  document.body.classList.toggle('viewer-expanded', expanded);
+  (expanded ? $('pdf-page') : $('fullscreen')).focus({ preventScroll: true });
+  requestAnimationFrame(renderPage);
+}
+
+$('fullscreen').addEventListener('click', async () => {
+  const viewer = $('material-viewer');
+  if (document.fullscreenElement === viewer) {
+    await document.exitFullscreen();
+  } else if (viewer.classList.contains('expanded')) {
+    viewer.classList.remove('expanded');
+    updateFullscreen();
+  } else {
+    try {
+      if (!viewer.requestFullscreen) throw new Error('Fullscreen unavailable');
+      await viewer.requestFullscreen();
+    } catch {
+      // Some mobile browsers do not expose or permit the Fullscreen API.
+      viewer.classList.add('expanded');
+      updateFullscreen();
+    }
+  }
+});
+document.addEventListener('fullscreenchange', updateFullscreen);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && $('material-viewer').classList.contains('expanded')) {
+    $('material-viewer').classList.remove('expanded');
+    updateFullscreen();
+    return;
+  }
+  if (!pdf || selectedDocument?.label !== 'Slides' || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.target.closest('input, select, textarea, [contenteditable="true"]')) return;
+  const next = ['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key);
+  const previous = ['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key);
+  if (event.key === ' ' && event.target.closest('button, a')) return;
+  if (!next && !previous && !['Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+  const target = event.key === 'Home' ? 1 : event.key === 'End' ? pdf.numPages
+    : Math.max(1, Math.min(pdf.numPages, pageNumber + (next ? 1 : -1)));
+  if (target !== pageNumber) { pageNumber = target; updatePageControls(); renderPage(); }
 });

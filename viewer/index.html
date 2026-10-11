@@ -33,15 +33,17 @@
       <div id="lesson" hidden>
         <div class="lesson-heading"><div><p id="lesson-meta" class="eyebrow"></p><h2 id="lesson-title" tabindex="-1"></h2></div><span class="lesson-symbol" aria-hidden="true">{ }</span></div>
         <div id="documents" class="documents" role="group" aria-label="Choose a lesson material"></div>
-        <div class="viewer-bar"><div><span class="live-dot" aria-hidden="true"></span><span id="document-label"></span><small>PDF preview</small></div><div class="actions"><a id="open-pdf" target="_blank" rel="noopener">Open PDF <span aria-hidden="true">↗</span></a><a id="download" download>Download original <span aria-hidden="true">↓</span></a></div></div>
+        <section id="material-viewer" aria-label="Document viewer">
+        <div class="viewer-bar"><div><span class="live-dot" aria-hidden="true"></span><span id="document-label"></span><small>PDF preview</small></div><div class="actions"><button id="fullscreen" type="button" aria-pressed="false">Fullscreen</button><a id="open-pdf" target="_blank" rel="noopener">Open PDF <span aria-hidden="true">↗</span></a><a id="download" download>Download original <span aria-hidden="true">↓</span></a></div></div>
         <div class="pdf-toolbar" role="group" aria-label="PDF page controls">
           <button id="previous-page" type="button" aria-label="Previous page" disabled>← Previous</button>
           <span id="page-count" aria-live="polite">Loading…</span>
           <button id="next-page" type="button" aria-label="Next page" disabled>Next →</button>
           <label>Zoom <select id="zoom"><option value="1">Fit width</option><option value="1.5">150%</option><option value="2">200%</option></select></label>
         </div>
-        <div id="preview" class="frame-wrap" aria-busy="true"><p id="pdf-status" role="status">Loading preview…</p><canvas id="pdf-page" role="img" aria-label="Lesson preview" hidden></canvas></div>
-        <p class="preview-help">For a separate PDF window or printing, choose <strong>Open PDF</strong>. Download the original to edit in PowerPoint or Word.</p>
+        <div id="preview" class="frame-wrap" aria-busy="true"><p id="pdf-status" role="status">Loading preview…</p><canvas id="pdf-page" tabindex="0" role="img" aria-label="Lesson preview" hidden></canvas></div>
+        <p class="preview-help">Slides: use a clicker, ←/→, Page Up/Down or Space. For printing, choose <strong>Open PDF</strong>. Download the original to edit.</p>
+        </section>
       </div>
       <p id="error" class="error" role="alert" hidden></p>
       <noscript><p class="error">Enable JavaScript to browse the lesson catalogue.</p></noscript>
