@@ -1,22 +1,22 @@
 # Lesson generators
 
-`ai.js` produces the IGCSE 0478 Paper 1 section 6.3 lesson in the existing house style. The source is the teacher-supplied Hodder textbook extract (printed pages 241–249); no textbook pages or artwork are redistributed. Activities are original and use suggested marking points. Official Cambridge question papers/mark schemes were unavailable during preparation.
+`ai.js` builds the IGCSE 0478 Paper 1 section 6.3 lesson in the existing house style. The current revision audits all 21 Paper 1 papers and their 21 published Cambridge mark schemes from 2023–2025: 29 AI parts across 18 papers. The matched student tasks adapt 20 real past-paper parts and retain 60 official marks; Task 1 adds original robotics recall with 15 suggested marks. See [the complete coverage audit](../../0478%20P1/Artificial%20Intelligence/AI_Exam_Coverage.md) for every part, source links and marking distinctions.
 
-The six task definitions are shared between the worksheet and student booklet. The separate teacher key covers both. The deck has 22 slides with speaker notes; the lesson is intended for roughly 60 minutes after Robotics, with Task 6 as extension/homework. Deep learning and the textbook's narrow/general/strong AI taxonomy are outside this lesson's core scope.
+The 33-slide deck teaches definition/characteristic answers, component names/roles/cloze, full versus processing-only diagnosis, machine-learning capabilities, navigation and transfer to search/weather/voice/games/delivery. Model-answer slides follow practice and are omitted from the student booklet. Core teaching can fit 60 minutes with selected questions; the full pack needs follow-up practice or a second period. It is not a prediction of future questions.
 
-Requires Node.js with `pptxgenjs` and `docx`, plus the repository's LibreOffice/Poppler render helpers. In the prepared cloud environment:
+`ai-exam-questions.json` is the shared source for all question wording, official allocations, citations, accepted alternatives, model answers and pitfalls. The worksheet and booklet use identical tasks; one separate key covers both.
+
+Five real photographs (factory robots, garage, vacuum, speaker, weather station) are embedded. Source/licence details are in `assets/ai/photos/credits.json`, in speaker notes, under images and in document credits. The photo files are only resized/recompressed. No claim is made that the pictured products implement hypothetical exam capabilities. Earlier vector assets are retained for reproducibility of the earlier revision, but are not used in this deck.
+
+Requires Node.js with `pptxgenjs` and `docx`, plus LibreOffice/Poppler render helpers. In the prepared cloud environment:
 
 ```bash
 source /workspace/lesson-tools/activate.sh
 cd /workspace/cs-lessons
-node scripts/lessons/ai.js deck '/workspace/lesson-tools/ai-lesson'
-python3 skills/comp-sci-lesson-maker/scripts/fix_ppr.py '/workspace/lesson-tools/ai-lesson/IGCSE_0478_Lesson_-_Artificial_Intelligence.pptx'
-render_slides.sh '/workspace/lesson-tools/ai-lesson/IGCSE_0478_Lesson_-_Artificial_Intelligence.pptx' '/workspace/lesson-tools/qa/ai/slides'
-node scripts/lessons/ai.js documents '/workspace/lesson-tools/ai-lesson' '/workspace/lesson-tools/qa/ai/slides'
+node scripts/lessons/ai.js deck '/workspace/lesson-tools/ai-exam-revision'
+python3 skills/comp-sci-lesson-maker/scripts/fix_ppr.py '/workspace/lesson-tools/ai-exam-revision/IGCSE_0478_Lesson_-_Artificial_Intelligence.pptx'
+render_slides.sh '/workspace/lesson-tools/ai-exam-revision/IGCSE_0478_Lesson_-_Artificial_Intelligence.pptx' '/workspace/lesson-tools/qa/ai-exam-revision/slides'
+node scripts/lessons/ai.js documents '/workspace/lesson-tools/ai-exam-revision' '/workspace/lesson-tools/qa/ai-exam-revision/slides'
 ```
 
-Review the rendered deck and all three documents before copying final files to `0478 P1/Artificial Intelligence/`. The website automatically includes the deck, worksheet and booklet. It excludes the answer key.
-
-## AI visual revision
-
-The deck uses original robot-arm, printer, email and leaf illustrations plus Lucide line icons (ISC licence). Editable PowerPoint shapes and labels explain expert-system information flow, rule matching and the training/test split. Source SVGs, PNGs, icon licence and the illustration renderer are in `assets/ai/`; rebuild images with `python3 assets/ai/render_assets.py` after installing `cairosvg`. The schematic leaves are not diagnostic photographs. The supplied PDF informed the content; its artwork was redrawn rather than cropped.
+Render and inspect all four documents before copying final files to `0478 P1/Artificial Intelligence/`. The site publishes slides, worksheet and booklet; it excludes the teacher answer key. Deep-learning internals and narrow/general/strong AI taxonomy are outside this lesson’s core scope.
