@@ -179,7 +179,11 @@ async function loadPdf(material) {
   const version = ++loadVersion;
   ++renderVersion;
   if (renderingTask) renderingTask.cancel();
-  if (loadingTask) loadingTask.destroy();
+  if (loadingTask) {
+    // An intentionally cancelled load can reject while its worker starts up.
+    // Its main promise is handled below; handle asynchronous cleanup as well.
+    void loadingTask.destroy().catch(() => {});
+  }
   pdf = null;
   pageNumber = 1;
   $('zoom').value = '1';

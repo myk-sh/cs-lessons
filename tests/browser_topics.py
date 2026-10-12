@@ -26,6 +26,19 @@ with sync_playwright() as p:
     assert page.locator('#page-count').inner_text()=='Page 1 of 30'
     assert page.locator('#documents button').count()==3
     assert 'Answer key' not in page.locator('#documents').inner_text()
+    # Switching during a delayed worker start must not leave an unhandled
+    # cancellation or replace the newly selected material with the old one.
+    def delay_worker(route):
+        page.wait_for_timeout(250)
+        route.fallback()
+    page.route('**/pdf.worker.min.mjs', delay_worker)
+    page.locator('#documents button').filter(has_text='Student booklet').click()
+    page.locator('#documents button').filter(has_text='Worksheet').click()
+    page.locator('#documents button').filter(has_text='Slides').click()
+    page.wait_for_selector('#pdf-page:not([hidden])')
+    page.wait_for_function("document.getElementById('preview').getAttribute('aria-busy')==='false'")
+    assert page.locator('#page-count').inner_text()=='Page 1 of 30'
+    page.unroute('**/pdf.worker.min.mjs', delay_worker)
     if args.screenshot: page.screenshot(path=args.screenshot)
     page.locator('#topic').select_option('0478:6')
     assert set(page.locator('.lesson-item strong').all_text_contents())=={'Artificial Intelligence','Automated Systems','Robotics'}
