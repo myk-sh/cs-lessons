@@ -50,6 +50,19 @@ This is coverage of the audited papers, not a prediction or guarantee of future 
 | 0478/13 Oct/Nov 2025 | 6(a) | 3 | AI definition | [QP](https://pastpapers.papacambridge.com/directories/CAIE/CAIE-pastpapers/upload/0478_w25_qp_13.pdf) · [MS](https://pastpapers.papacambridge.com/directories/CAIE/CAIE-pastpapers/upload/0478_w25_ms_13.pdf) |
 | 0478/13 Oct/Nov 2025 | 6(b) | 3 | Game adaptation | [QP](https://pastpapers.papacambridge.com/directories/CAIE/CAIE-pastpapers/upload/0478_w25_qp_13.pdf) · [MS](https://pastpapers.papacambridge.com/directories/CAIE/CAIE-pastpapers/upload/0478_w25_ms_13.pdf) |
 
+## Component definitions used on slide 6
+
+The slide uses these concise paraphrases of actual question wording and published marking points:
+
+| Component | Definition / relationship taught | Evidence |
+| --- | --- | --- |
+| Knowledge base | Stores a list of facts. | 0478/13 Oct/Nov 2023 Q10(a): question explicitly describes a list of facts; MS identifies knowledge base. |
+| Rule base | Stores rules that link facts in the knowledge base. | 0478/13 May/June 2023 Q7(b): MS accepts storing the rules, inference-engine use, and linking facts in the knowledge base. |
+| Inference engine | Applies rules to facts to reach a diagnosis; chooses follow-up questions using previous answers. | 0478/12 May/June 2023 Q9(b); 0478/11 Oct/Nov 2024 Q9(a); 0478/12 May/June 2024 Q10(b). |
+| Interface | User enters data through it; it displays questions and the diagnosis. | 0478/13 Oct/Nov 2023 Q10(a), 0478/11 Oct/Nov 2024 Q9(a), and 0478/12 May/June 2024 Q10(b). |
+
+QP and MS links for every cited part appear in the audit above. Slide notes record the particular wording behind each definition. The slide teaches the relationships before formal exam practice; these definitions are not an invented allocation of one mark per phrase.
+
 ## Important marking distinctions
 
 - 2024 May/June 12 Q10(a) credits the simulation idea as one point, with another AI feature for the two-mark answer. 2025 Oct/Nov 13 Q6(a) requires any three distinct features. Do not award arbitrary marks for isolated words in a definition.
