@@ -15,7 +15,7 @@ Each lesson folder holds:
 | P1 | [Packet Switching](0478%20P1/Packet%20Switching) | 2.1 Types and methods of data transmission |
 | P1 | [Automated Systems](0478%20P1/Automated%20Systems) | 6.1 Automated systems |
 | P1 | [Robotics](0478%20P1/Robotics) | 6.2 Robotics (deck, student booklet and answer key) |
-| P1 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) | 6.3 AI, expert systems and machine learning; 2023–2025 past-paper practice, worked answers and photographs |
+| P1 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) | 6.3 AI, expert systems and machine learning; concepts before exam practice, 17 distinct photographs and worked answers |
 | P2 | *(none yet)* | |
 
 ## 9618 AS & A Level
