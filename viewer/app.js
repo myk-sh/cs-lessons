@@ -167,10 +167,10 @@ async function renderPage() {
     const width = container.clientWidth - padding;
     const natural = page.getViewport({ scale: 1 });
     const widthFit = width / natural.width;
-    const isPresentation = selectedDocument.label === 'Slides' && isExpanded();
+    const isPresentation = isExpanded();
     const heightFit = (container.clientHeight - padding) / natural.height;
     const fit = isPresentation ? Math.min(widthFit, heightFit) : widthFit;
-    const scale = fit * Number($('zoom').value);
+    const scale = isPresentation ? fit : fit * Number($('zoom').value);
     const viewport = page.getViewport({ scale });
     const resolution = Math.min(window.devicePixelRatio || 1, 2);
     const canvas = $('pdf-page');
@@ -214,18 +214,26 @@ function updateFullscreen() {
   const expanded = isExpanded();
   $('fullscreen').textContent = expanded ? 'Exit fullscreen' : 'Fullscreen';
   $('fullscreen').setAttribute('aria-pressed', String(expanded));
+  $('exit-fullscreen').hidden = !expanded;
   document.body.classList.toggle('viewer-expanded', expanded);
   (expanded ? $('pdf-page') : $('fullscreen')).focus({ preventScroll: true });
   requestAnimationFrame(renderPage);
 }
 
+async function exitPresentation() {
+  if (document.fullscreenElement === $('material-viewer')) {
+    await document.exitFullscreen();
+  } else {
+    $('material-viewer').classList.remove('expanded');
+    updateFullscreen();
+  }
+}
+
+$('exit-fullscreen').addEventListener('click', exitPresentation);
 $('fullscreen').addEventListener('click', async () => {
   const viewer = $('material-viewer');
-  if (document.fullscreenElement === viewer) {
-    await document.exitFullscreen();
-  } else if (viewer.classList.contains('expanded')) {
-    viewer.classList.remove('expanded');
-    updateFullscreen();
+  if (isExpanded()) {
+    await exitPresentation();
   } else {
     try {
       if (!viewer.requestFullscreen) throw new Error('Fullscreen unavailable');
@@ -239,12 +247,12 @@ $('fullscreen').addEventListener('click', async () => {
 });
 document.addEventListener('fullscreenchange', updateFullscreen);
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && $('material-viewer').classList.contains('expanded')) {
-    $('material-viewer').classList.remove('expanded');
-    updateFullscreen();
+  if (event.key === 'Escape' && isExpanded()) {
+    event.preventDefault();
+    void exitPresentation();
     return;
   }
-  if (!pdf || selectedDocument?.label !== 'Slides' || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (!pdf || (selectedDocument?.label !== 'Slides' && !isExpanded()) || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
   if (event.target.closest('input, select, textarea, [contenteditable="true"]')) return;
   const next = ['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key);
   const previous = ['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key);
