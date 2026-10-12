@@ -20,8 +20,10 @@ with sync_playwright() as p:
   page.wait_for_function("document.getElementById('preview').getAttribute('aria-busy')==='false'")
   for selector in ['.viewer-bar', '.pdf-toolbar', '.preview-help']:
    assert not page.locator(selector).is_visible(), selector
+   assert page.locator(selector).evaluate('el=>el.hidden'), selector
   assert page.locator('#exit-fullscreen').is_visible()
   assert page.locator('#material-viewer button:visible').count()==1
+  assert page.locator('#material-viewer').evaluate("el=>el.classList.contains('presenting')")
   page.wait_for_function("""() => {
    const canvas=document.getElementById('pdf-page').getBoundingClientRect();
    const preview=document.getElementById('preview').getBoundingClientRect();

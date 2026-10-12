@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -46,6 +47,11 @@ class ViewerBuildTests(unittest.TestCase):
             self.assertFalse(Path(docs[0]['original']).is_absolute())
             self.assertEqual(len(list((out / 'materials').rglob('*.pdf'))), 1)
             self.assertTrue((out / 'index.html').exists())
+            html = (out / 'index.html').read_text()
+            for asset in ('styles.css', 'app.js'):
+                revision = hashlib.sha256((out / asset).read_bytes()).hexdigest()[:12]
+                self.assertIn(f'"{asset}?v={revision}"', html)
+                self.assertNotIn(f'"{asset}"', html)
             builder.build(root, out, 'missing-soffice')
             (folder / 'Worksheet.pdf').write_bytes(b'broken PDF')
             with self.assertRaisesRegex(RuntimeError, 'Invalid PDF'):

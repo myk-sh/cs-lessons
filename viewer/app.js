@@ -215,6 +215,10 @@ function updateFullscreen() {
   $('fullscreen').textContent = expanded ? 'Exit fullscreen' : 'Fullscreen';
   $('fullscreen').setAttribute('aria-pressed', String(expanded));
   $('exit-fullscreen').hidden = !expanded;
+  $('material-viewer').classList.toggle('presenting', expanded);
+  for (const element of $('material-viewer').querySelectorAll('.viewer-bar, .pdf-toolbar, .preview-help')) {
+    element.hidden = expanded;
+  }
   document.body.classList.toggle('viewer-expanded', expanded);
   (expanded ? $('pdf-page') : $('fullscreen')).focus({ preventScroll: true });
   requestAnimationFrame(renderPage);

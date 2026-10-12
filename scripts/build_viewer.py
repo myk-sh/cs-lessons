@@ -64,6 +64,14 @@ def build(root, output, soffice, include_answer_keys=False):
     with tempfile.TemporaryDirectory(prefix='lesson-viewer-', dir=output.parent) as staging:
         site = Path(staging) / 'site'
         shutil.copytree(ROOT / 'viewer', site)
+        # Pages caches assets for ten minutes. New HTML must request matching
+        # CSS and JavaScript rather than reuse files from a previous deployment.
+        index = site / 'index.html'
+        html = index.read_text()
+        for asset in ('styles.css', 'app.js'):
+            revision = hashlib.sha256((site / asset).read_bytes()).hexdigest()[:12]
+            html = html.replace(f'"{asset}"', f'"{asset}?v={revision}"')
+        index.write_text(html)
         (site / '.lesson-viewer-build').touch()
         (site / '.nojekyll').touch()
         assets = site / 'materials'
