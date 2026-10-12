@@ -65,14 +65,20 @@ function selectLesson(lesson, documentId, focus = false) {
   if (focus) $('lesson-title').focus({ preventScroll: true });
 }
 
+function materialUrl(material, kind) {
+  const url = new URL(material[kind], location.href);
+  if (material.revision) url.searchParams.set('v', material.revision);
+  return url.href;
+}
+
 function selectDocument(material) {
   selectedDocument = material;
   for (const button of $('documents').children) {
     button.setAttribute('aria-pressed', String(button.dataset.id === material.id));
   }
   $('document-label').textContent = material.label;
-  $('open-pdf').href = material.pdf;
-  $('download').href = material.original;
+  $('open-pdf').href = materialUrl(material, 'pdf');
+  $('download').href = materialUrl(material, 'original');
   $('download').download = material.name;
   loadPdf(material);
   document.title = `${selectedLesson.title} · Lesson Library`;
@@ -90,7 +96,8 @@ for (const id of ['search', 'syllabus', 'paper']) {
   $(id).addEventListener(id === 'search' ? 'input' : 'change', renderList);
 }
 window.addEventListener('hashchange', restoreSelection);
-fetch('catalog.json')
+// Read the latest catalogue; individual materials retain content-based caching.
+fetch(`catalog.json?v=${Date.now()}`)
   .then(response => {
     if (!response.ok) throw new Error('Catalogue unavailable');
     return response.json();
@@ -133,7 +140,7 @@ async function loadPdf(material) {
   $('preview').setAttribute('aria-busy', 'true');
   updatePageControls();
   try {
-    loadingTask = pdfjs.getDocument(material.pdf);
+    loadingTask = pdfjs.getDocument(materialUrl(material, 'pdf'));
     const loaded = await loadingTask.promise;
     if (version !== loadVersion) return;
     pdf = loaded;

@@ -100,6 +100,7 @@ def build(root, output, soffice, include_answer_keys=False):
                         raise RuntimeError(f'Invalid PDF generated for {source.name}')
                     document['original'] = original.relative_to(site).as_posix()
                     document['pdf'] = pdf.relative_to(site).as_posix()
+                    document['revision'] = hashlib.sha256(original.read_bytes() + pdf.read_bytes()).hexdigest()[:12]
                     print(f"Converted {lesson['title']}: {document['label']}", flush=True)
         (site / 'catalog.json').write_text(json.dumps({'lessons': lessons}, indent=2) + '\n')
         # Office exports and restrictive build umasks can produce owner-only files.

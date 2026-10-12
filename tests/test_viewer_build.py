@@ -43,6 +43,7 @@ class ViewerBuildTests(unittest.TestCase):
             catalogue = json.loads((out / 'catalog.json').read_text())
             docs = catalogue['lessons'][0]['documents']
             self.assertEqual(len(docs), 1)
+            self.assertEqual(docs[0]['revision'], hashlib.sha256(b'%PDF-1.4\nstudent' * 2).hexdigest()[:12])
             self.assertEqual((out / docs[0]['pdf']).read_bytes(), b'%PDF-1.4\nstudent')
             self.assertFalse(Path(docs[0]['original']).is_absolute())
             self.assertEqual(len(list((out / 'materials').rglob('*.pdf'))), 1)
