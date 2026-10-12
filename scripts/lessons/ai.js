@@ -43,8 +43,9 @@ function photo(s,id,x,y,ww,hh,{crop=true,dark=false}={}) {
  if(crop)opts.sizing={type:'crop',w:ww,h:hh};
  else {opts.w=Math.min(ww,hh*p.width/p.height);opts.h=opts.w*p.height/p.width;opts.x+= (ww-opts.w)/2;opts.y+=(hh-opts.h)/2;}
  s.addImage(opts);
- const author={'doctor':'University of Michigan Medical School','assistant':'Maurizio Pesce'}[id]||p.author;
- text(s,author+' · '+p.license,x,y+hh+.07,ww,.27,9,{color:dark?'CECBDC':C.muted});
+ const bounds=crop?{x,y,w:ww,h:hh}:opts;
+ const author={'doctor':'University of Michigan Medical School','assistant':'Maurizio Pesce','weather':'NOAA / US government'}[id]||p.author;
+ text(s,author+' · '+p.license,bounds.x,bounds.y+bounds.h+.07,bounds.w,.27,9,{color:dark?'CECBDC':C.muted});
  s.addNotes('Photo: '+p.title+'\nAuthor: '+p.author+'\nSource: '+p.source+'\nLicence: '+p.licenseUrl+'\nResized/recompressed; '+(crop?'aspect-preserving crop in slide placement.':'uncropped aspect-preserving placement.')+' No subject alterations. Representative hardware/settings; hypothetical lesson capabilities are not certified for the pictured products.');
 }
 function table(s,rows,widths,y=1.9,size=19,height=.8) {L.table(s,rows,{x:.65,y,w:12,colW:widths,fontSize:size,rowH:height});}
@@ -71,7 +72,7 @@ async function deck() {
  note(s,'Task 1: closed book first. Then explain the sensor → processor → actuator chain.');
  s=slide('automation','Automatic does not always mean intelligent','Explore · compare','Contrast a hypothetical stored wash cycle with self-driving perception and decision-making. Do not assert the pictured appliance cannot use AI. Ask which situation demands reasoning about changing surroundings.');
  photo(s,'washing',.65,1.9,4.1,3.25,{crop:false});photo(s,'car',5.05,1.9,7.6,3.25,{crop:false});
- text(s,'Repeat a stored wash cycle',.65,5.55,4.1,.45,22,{bold:true});text(s,'Respond to unfamiliar traffic',5.05,5.55,7.6,.45,22,{bold:true});
+ text(s,'Repeat a stored wash cycle',.65,5.55,4.1,.45,22,{bold:true,align:'center'});text(s,'Respond to unfamiliar traffic',5.05,5.55,7.6,.45,22,{bold:true,align:'center'});
  note(s,'Both are automated. Which situation needs decisions about changing conditions?');
  s=slide('meaning','What do we mean by AI?','Understand · artificial intelligence','AI simulates intelligent behaviour. Reasoning, learning and adaptation are possible features; not every AI system learns continuously. Chess photograph illustrates human reasoning, not a claim that this photograph contains AI. Ask pupils how a computer opponent could make a choice.');
  photo(s,'chess',.65,1.95,6.15,3.9);
@@ -105,7 +106,7 @@ async function deck() {
  note(s,'Check: why must the engine use facts as well as rules?');
  s=slide('ml-concept','Can a system learn from examples?','Understand · machine learning','Machine learning is a form of AI: systems use data/examples to learn patterns and can change data/processes. Labelled images illustrate supervised training. Two images here are examples, not a sufficient dataset. Use varied examples and held-out data.');
  photo(s,'cat',.65,1.95,5.82,2.7,{crop:false});photo(s,'dog',6.82,1.95,5.82,2.7,{crop:false});
- text(s,'Label: CAT',.65,5.05,5.82,.43,24,{bold:true,color:C.purple});text(s,'Label: DOG',6.82,5.05,5.82,.43,24,{bold:true,color:C.purple});
+ text(s,'Label: CAT',.65,5.05,5.82,.43,24,{bold:true,color:C.purple,align:'center'});text(s,'Label: DOG',6.82,5.05,5.82,.43,24,{bold:true,color:C.purple,align:'center'});
  text(s,'Machine learning is a form of AI that learns patterns from data.',.65,5.65,12,.38,20,{bold:true,color:C.purple});
  note(s,'Many varied examples → learned patterns → a prediction for an unfamiliar photograph.');
  s=slide('learning-loop','Experience changes later decisions','Understand · learning mechanism','Training/retraining may be separate from use: not every prediction retrains automatically. Data, patterns, decisions and feedback illustrate general mechanism.');
@@ -131,7 +132,7 @@ async function deck() {
  note(s,'Record the outcome → use experience → choose a different future action.');
  s=slide('classify','Explain the behaviour, not the gadget','Check understanding · pairs','Photo hardware does not reveal its algorithm. A is hypothetical fixed timing; B is hypothetical historical-data predictor. AI/ML depends on method, not appearance. Ask each pair to justify before reveal in notes: A automation not evidence of AI; B learned patterns predict weather, ML.');
  photo(s,'traffic',.65,1.95,3.1,3.15,{crop:false});photo(s,'weather',4.3,1.95,3.1,3.15,{crop:false});
- text(s,'A  Repeats a fixed\nred–amber–green cycle.',.65,5.5,3.55,.65,19,{bold:true});text(s,'B  Learns seasonal patterns\nto predict tomorrow’s weather.',4.3,5.5,3.55,.65,19,{bold:true});
+ text(s,'A  Repeats a fixed\nred–amber–green cycle.',.65,5.5,3.1,.85,19,{bold:true,align:'center'});text(s,'B  Learns seasonal patterns\nto predict tomorrow’s weather.',4.3,5.5,3.1,.85,19,{bold:true,align:'center'});
  text(s,'Automation?\nAI?\nMachine learning?',8.25,2.3,4.1,1.9,29,{bold:true});text(s,'Explain what in the\ndescription supports\nyour choice.',8.25,4.5,4.1,1.2,23);
  s=slide('compare','Two approaches that can work together','Consolidate · connect the ideas','Expert systems use explicit expert facts and rules, often fixed; ML learns from data. Some actual papers combine expert systems and ML; avoid mutually exclusive claim. AI broader than either.');
  table(s,[['Expert system','Machine learning'],['Expert facts and explicit IF–THEN rules','Patterns learned from examples / experience'],['Engine applies rules to reach advice','Uses learned patterns to predict or decide'],['Can operate with fixed expert knowledge','Can adapt data or processes through learning'],['A combined system can use BOTH approaches','A system need not learn during every use']],[6,6],1.95,21,.83);
@@ -158,7 +159,7 @@ async function deck() {
  feedback('ml-check','A specific explanation of improvement',question('vacuum'),['Collect obstacle-location data while cleaning.','Use the data to adapt its route-planning process.','Avoid known obstacles on later cleaning runs.'],'Name the relevant data and the changed future behaviour.');
  s=slide('transfer','Try the same ideas in unfamiliar contexts','Exam practice · Task 6','Follow-up bank. Attempt all five tasks independently before feedback. Photos introduce three distinct contexts with no reuse. Full pack needs a second period or homework feedback.');
  photo(s,'clouds',.65,1.95,4.3,2.6);photo(s,'speaker',5.25,1.95,2.8,2.6,{crop:false});photo(s,'games',8.35,1.95,4.3,2.6);
- text(s,'Weather prediction',.65,5.03,4.3,.45,22,{bold:true});text(s,'Voice recognition',5.25,5.03,2.8,.7,20,{bold:true});text(s,'Game behaviour',8.35,5.03,4.3,.45,22,{bold:true});
+ text(s,'Weather prediction',.65,5.03,4.3,.45,22,{bold:true,align:'center'});text(s,'Voice recognition',5.25,5.03,2.8,.7,20,{bold:true,align:'center'});text(s,'Game behaviour',8.35,5.03,4.3,.45,22,{bold:true,align:'center'});
  note(s,'Use the scenario: data → patterns or feedback → changed prediction or action.');
  promptSlide('voice-prompt','Explain an improvement in voice input',[question('voice')],'Attempt Task 6(c). No matching answer here. Discuss why simply naming a microphone is insufficient.');
  feedback('search-check','Search: feedback changes later results',question('search'),['Record that a result was unsuitable / unhelpful.','Use feedback to change data or ranking rules.','Return more relevant results in a later search.'],'Keyword matching alone does not explain machine learning.');
