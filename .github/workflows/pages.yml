@@ -7,6 +7,7 @@ on:
       - '9618 P*/**'
       - 'viewer/**'
       - 'scripts/build_viewer.py'
+      - 'syllabus-topics.json'
       - 'tests/**'
       - '.github/workflows/pages.yml'
   pull_request:
@@ -15,6 +16,7 @@ on:
       - '9618 P*/**'
       - 'viewer/**'
       - 'scripts/build_viewer.py'
+      - 'syllabus-topics.json'
       - 'tests/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:

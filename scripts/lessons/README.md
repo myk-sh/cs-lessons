@@ -22,3 +22,11 @@ node scripts/lessons/ai.js documents '/workspace/lesson-tools/ai-concept-first' 
 ```
 
 Render and inspect all four documents before copying final files to `0478 P1/Artificial Intelligence/`. The site publishes slides, worksheet and booklet; it excludes the teacher answer key. Deep-learning internals and narrow/general/strong AI taxonomy are outside this lesson’s core scope.
+
+## Encryption
+
+`encryption.js` builds the four matched files for 0478 section 2.3. The 30-slide deck teaches the concepts before exam framing on slide 17, with seven distinct photographs, explicit recipient-key ownership, two-way messages, a worked toy cipher and independent practice before feedback. `encryption-exam-questions.json` stores eight adapted parts retaining 17 official marks; original activities add 34 suggested marks. See the lesson's `Encryption_Exam_Coverage.md` for sources and marking nuances.
+
+Rebuild with the same sequence as AI, substituting `encryption.js` and the encryption deck filename. Use a temporary output directory, render slides, then generate documents with the rendered image directory. Review all four documents before copying them to `0478 P1/Symmetric and Asymmetric Encryption/`.
+
+The supplied Hodder extract's core is printed pp.63–66. Its quantum extension is not part of this IGCSE lesson. Letter shifts illustrate the transformation; they are not recommended cryptography. Algorithm and key, confidentiality and interception, and shared secret versus recipient public/private keys are taught distinctly.

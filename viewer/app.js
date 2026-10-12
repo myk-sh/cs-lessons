@@ -2,23 +2,63 @@ import * as pdfjs from './vendor/pdfjs/pdf.min.mjs';
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('./vendor/pdfjs/pdf.worker.min.mjs', import.meta.url).href;
 const $ = id => document.getElementById(id);
 let lessons = [];
+let topics = [];
 let selectedLesson = null;
 let selectedDocument = null;
 const syllabusNames = { '0478': 'IGCSE', '9618': 'AS & A Level' };
 
+function matchesCourse(lesson) {
+  return (!$('syllabus').value || lesson.syllabus === $('syllabus').value)
+    && (!$('paper').value || lesson.paper === $('paper').value);
+}
+
 function matches(lesson) {
   const query = $('search').value.trim().toLowerCase();
-  return (!$('syllabus').value || lesson.syllabus === $('syllabus').value)
-    && (!$('paper').value || lesson.paper === $('paper').value)
-    && `${lesson.title} ${lesson.syllabus} ${lesson.paper} ${syllabusNames[lesson.syllabus] || ''}`.toLowerCase().includes(query);
+  return matchesCourse(lesson)
+    && (!$('topic').value || lesson.topicId === $('topic').value)
+    && `${lesson.title} ${lesson.syllabus} ${lesson.paper} ${syllabusNames[lesson.syllabus] || ''} ${lesson.topic || ''} chapter ${lesson.chapter || ''} ${(lesson.sections || []).join(' ')}`.toLowerCase().includes(query);
+}
+
+function refreshTopics() {
+  const selected = $('topic').value;
+  const available = new Set(lessons.filter(matchesCourse).map(x => x.topicId));
+  $('topic').replaceChildren(new Option('All topics', ''));
+  for (const syllabus of Object.keys(syllabusNames)) {
+    const choices = topics.filter(x => x.syllabus === syllabus && available.has(x.id));
+    if (!choices.length) continue;
+    const group = document.createElement('optgroup');
+    group.label = `${syllabus} · ${syllabusNames[syllabus]}`;
+    for (const topic of choices) group.append(new Option(`${topic.chapter ? `${topic.chapter} · ` : ''}${topic.title}`, topic.id));
+    $('topic').append(group);
+  }
+  $('topic').value = available.has(selected) ? selected : '';
 }
 
 function renderList() {
-  const visible = lessons.filter(matches);
+  const visible = lessons.filter(matches).sort((a,b) => a.syllabus.localeCompare(b.syllabus)
+    || a.paper.localeCompare(b.paper) || (a.chapter ?? 999)-(b.chapter ?? 999)
+    || (a.sections?.[0] || '').localeCompare(b.sections?.[0] || '', undefined, {numeric:true})
+    || a.title.localeCompare(b.title));
   $('lesson-list').replaceChildren();
   $('count').textContent = `${visible.length} lesson${visible.length === 1 ? '' : 's'}`;
   $('empty').hidden = visible.length > 0;
+  let groupKey = null, container;
   for (const lesson of visible) {
+    const key = `${lesson.syllabus}:${lesson.paper}:${lesson.topicId}`;
+    if (key !== groupKey) {
+      groupKey = key;
+      container = document.createElement('section');
+      container.className = 'lesson-group';
+      const heading = document.createElement('h3');
+      heading.id = `topic-${key.replaceAll(':','-')}`;
+      heading.textContent = `${lesson.chapter ? `${lesson.chapter} · ` : ''}${lesson.topic || 'Other lessons'}`;
+      const course = document.createElement('p');
+      course.className = 'topic-course';
+      course.textContent = `${lesson.syllabus} · ${syllabusNames[lesson.syllabus] || ''} · ${lesson.paper}`;
+      container.setAttribute('aria-labelledby', heading.id);
+      container.append(course, heading);
+      $('lesson-list').append(container);
+    }
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'lesson-item';
@@ -27,7 +67,7 @@ function renderList() {
     const title = document.createElement('strong');
     title.textContent = lesson.title;
     const meta = document.createElement('small');
-    meta.textContent = `${lesson.syllabus} · ${lesson.paper} · ${lesson.documents.length} materials`;
+    meta.textContent = `${(lesson.sections || []).join(' / ')}${lesson.sections?.length ? ' · ' : ''}${lesson.documents.length} materials`;
     label.append(title, meta);
     const arrow = document.createElement('span');
     arrow.className = 'item-arrow';
@@ -35,7 +75,7 @@ function renderList() {
     arrow.textContent = '›';
     button.append(label, arrow);
     button.addEventListener('click', () => selectLesson(lesson, null, true));
-    $('lesson-list').append(button);
+    container.append(button);
   }
 }
 
@@ -44,7 +84,7 @@ function selectLesson(lesson, documentId, focus = false) {
   $('welcome').hidden = true;
   $('lesson').hidden = false;
   $('lesson-title').textContent = lesson.title;
-  $('lesson-meta').textContent = `${lesson.syllabus} · ${syllabusNames[lesson.syllabus] || ''} · Paper ${lesson.paper.slice(1)}`;
+  $('lesson-meta').textContent = `${lesson.syllabus} · ${syllabusNames[lesson.syllabus] || ''} · Paper ${lesson.paper.slice(1)} · ${lesson.topic || 'Other lessons'}${lesson.sections?.length ? ` · ${lesson.sections.join(' / ')}` : ''}`;
   $('documents').replaceChildren();
   for (const material of lesson.documents) {
     const button = document.createElement('button');
@@ -92,8 +132,11 @@ function restoreSelection() {
   if (lesson) selectLesson(lesson, params.get('material'));
 }
 
-for (const id of ['search', 'syllabus', 'paper']) {
+for (const id of ['search', 'topic']) {
   $(id).addEventListener(id === 'search' ? 'input' : 'change', renderList);
+}
+for (const id of ['syllabus', 'paper']) {
+  $(id).addEventListener('change', () => { refreshTopics(); renderList(); });
 }
 window.addEventListener('hashchange', restoreSelection);
 // Read the latest catalogue; individual materials retain content-based caching.
@@ -105,6 +148,12 @@ fetch(`catalog.json?v=${Date.now()}`)
   .then(data => {
     if (!Array.isArray(data.lessons) || !data.lessons.length) throw new Error('Empty catalogue');
     lessons = data.lessons;
+    topics = data.topics || [];
+    for (const lesson of lessons) {
+      if (!topics.some(x => x.id === lesson.topicId)) topics.push({id:lesson.topicId,syllabus:lesson.syllabus,chapter:lesson.chapter,title:lesson.topic || 'Other lessons'});
+    }
+    topics.sort((a,b) => a.syllabus.localeCompare(b.syllabus) || (a.chapter ?? 999)-(b.chapter ?? 999));
+    refreshTopics();
     restoreSelection();
   })
   .catch(() => {

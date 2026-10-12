@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+TOPICS = json.loads((ROOT / 'syllabus-topics.json').read_text())
 SUPPORTED = {'.pptx', '.ppt', '.docx', '.doc', '.pdf'}
 ROLES = [('answer_key', 'Answer key'), ('student_booklet', 'Student booklet'),
          ('worksheet', 'Worksheet')]
@@ -41,8 +42,19 @@ def discover(root, include_answer_keys=False):
             documents.sort(key=lambda d: (order[d['label']], d['name']))
             if documents:
                 identity = folder.relative_to(root).as_posix()
+                metadata_file = folder / 'lesson.json'
+                metadata = json.loads(metadata_file.read_text()) if metadata_file.exists() else {}
+                chapter = metadata.get('chapter')
+                sections = metadata.get('sections', [])
+                if chapter is not None and (type(chapter) is not int or str(chapter) not in TOPICS.get(syllabus, {})):
+                    raise ValueError(f'Unknown syllabus chapter in {metadata_file}')
+                if not isinstance(sections, list) or any(not isinstance(s, str) or not re.fullmatch(r'\d+\.\d+', s) or s.split('.')[0] != str(chapter) for s in sections):
+                    raise ValueError(f'Invalid section references in {metadata_file}')
                 lessons.append({'id': hashlib.sha256(identity.encode()).hexdigest()[:16],
                                 'title': folder.name, 'syllabus': syllabus, 'paper': number,
+                                'chapter': chapter, 'topic': TOPICS.get(syllabus, {}).get(str(chapter), 'Other lessons'),
+                                'topicId': f'{syllabus}:{chapter}' if chapter is not None else f'{syllabus}:other',
+                                'sections': sections,
                                 'documents': documents})
     return lessons
 
@@ -102,7 +114,9 @@ def build(root, output, soffice, include_answer_keys=False):
                     document['pdf'] = pdf.relative_to(site).as_posix()
                     document['revision'] = hashlib.sha256(original.read_bytes() + pdf.read_bytes()).hexdigest()[:12]
                     print(f"Converted {lesson['title']}: {document['label']}", flush=True)
-        (site / 'catalog.json').write_text(json.dumps({'lessons': lessons}, indent=2) + '\n')
+        topics = [{'id': f'{syllabus}:{number}', 'syllabus': syllabus, 'chapter': int(number), 'title': title}
+                  for syllabus, chapters in TOPICS.items() for number, title in chapters.items()]
+        (site / 'catalog.json').write_text(json.dumps({'lessons': lessons, 'topics': topics}, indent=2) + '\n')
         # Office exports and restrictive build umasks can produce owner-only files.
         # Pages must be able to traverse directories and read every published asset.
         site.chmod(0o755)

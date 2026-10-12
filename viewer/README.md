@@ -48,3 +48,17 @@ Choose **Slides**, then **Fullscreen**. Presentation mode shows only the slide a
 Press **Escape** or click the small **×** at the top right to return. If native fullscreen is unavailable, the button expands the viewer to fill the browser window; Escape closes this fallback. Word/PDF pages also fit the screen in fullscreen; use the same keyboard controls to turn pages. Your normal zoom setting and controls return when you exit.
 
 Optional browser regression check (requires Python Playwright and Chromium): after serving `dist/`, run `python3 tests/browser_presenter.py --url http://127.0.0.1:8000/`. Use `--browser-executable /path/to/chromium` to select an installed browser. This checks slide-only fullscreen, Escape and the exit button, clicker keys, fitting despite a previous zoom setting, restored controls, input focus, wide/mobile fallback and document page navigation. The standard Python build tests remain dependency-free.
+
+## Chapters and topics
+
+The catalogue groups lessons by syllabus, paper and official chapter/topic. Use the **Topic** filter alongside syllabus and paper, or search topic names and section references (for example `2.3`). Filters only offer topics represented by the materials available in the selected course/paper.
+
+Each source lesson folder contains `lesson.json`, for example:
+
+```json
+{"chapter": 2, "sections": ["2.3"]}
+```
+
+Chapter names come from root `syllabus-topics.json`. Section references must belong to that primary chapter. Keep source folders in their existing locations to preserve lesson/material IDs and bookmarks. A folder without metadata is placed under **Other lessons**, rather than assigned a guessed topic. Adding a chapter does not require moving old materials. The repository README is also indexed by chapter.
+
+Run `python3 tests/browser_topics.py --url http://127.0.0.1:8000/ --browser-executable /path/to/chromium` after a full build to check chapter groups, filters, section search, legacy AI bookmarks, encryption previews, excluded teacher keys and mobile navigation.

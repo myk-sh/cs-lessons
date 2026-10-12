@@ -1,0 +1,36 @@
+{
+  "0478": {
+    "1": "Data representation",
+    "2": "Data transmission",
+    "3": "Hardware",
+    "4": "Software",
+    "5": "The internet and its uses",
+    "6": "Automated and emerging technologies",
+    "7": "Algorithm design and problem-solving",
+    "8": "Programming",
+    "9": "Databases",
+    "10": "Boolean logic"
+  },
+  "9618": {
+    "1": "Information representation",
+    "2": "Communication",
+    "3": "Hardware",
+    "4": "Processor fundamentals",
+    "5": "System software",
+    "6": "Security, privacy and data integrity",
+    "7": "Ethics and ownership",
+    "8": "Databases",
+    "9": "Algorithm design and problem-solving",
+    "10": "Data types and structures",
+    "11": "Programming",
+    "12": "Software development",
+    "13": "Data representation",
+    "14": "Communication and internet technologies",
+    "15": "Hardware and virtual machines",
+    "16": "System software",
+    "17": "Security",
+    "18": "Artificial intelligence",
+    "19": "Computational thinking and problem-solving",
+    "20": "Further programming"
+  }
+}

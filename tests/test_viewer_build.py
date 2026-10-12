@@ -13,6 +13,24 @@ spec.loader.exec_module(builder)
 
 
 class ViewerBuildTests(unittest.TestCase):
+    def test_topic_metadata_preserves_links_and_validates_syllabus_references(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            folder = root / '0478 P1' / 'Encryption'
+            folder.mkdir(parents=True)
+            (folder / 'Slides.pptx').touch()
+            original = builder.discover(root)[0]
+            (folder / 'lesson.json').write_text(json.dumps({'chapter': 2, 'sections': ['2.3']}))
+            grouped = builder.discover(root)[0]
+            self.assertEqual(grouped['id'], original['id'])
+            self.assertEqual(grouped['documents'][0]['id'], original['documents'][0]['id'])
+            self.assertEqual(grouped['topic'], 'Data transmission')
+            self.assertEqual(grouped['topicId'], '0478:2')
+            self.assertEqual(grouped['sections'], ['2.3'])
+            (folder / 'lesson.json').write_text(json.dumps({'chapter': 2, 'sections': ['6.3']}))
+            with self.assertRaisesRegex(ValueError, 'Invalid section'):
+                builder.discover(root)
+
     def test_discovery_orders_materials_and_excludes_answers(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

@@ -1,42 +1,60 @@
 # Computer Science lessons
 
-Lesson resources for Cambridge IGCSE Computer Science (0478) and Cambridge International AS & A Level Computer Science (9618), organised by syllabus and paper.
+Cambridge IGCSE Computer Science (0478) and Cambridge International AS & A Level Computer Science (9618) materials, organised by syllabus, paper and syllabus chapter/topic.
 
-Each lesson folder holds:
-- **slide deck** (`.pptx`)
-- **worksheet**
-- **answer key** (separate document)
-- **student booklet**: the essential slides and the tasks interleaved, so students only need one document
+Each lesson has slides, a worksheet, a separate teacher answer key and a student booklet where available. The public [lesson library](https://myk-sh.github.io/cs-lessons/) groups lessons by chapter and provides syllabus, paper and topic filters. Teacher answer keys are excluded.
 
 ## 0478 IGCSE
 
-| Paper | Lesson | Syllabus |
-|---|---|---|
-| P1 | [Packet Switching](0478%20P1/Packet%20Switching) | 2.1 Types and methods of data transmission |
-| P1 | [Automated Systems](0478%20P1/Automated%20Systems) | 6.1 Automated systems |
-| P1 | [Robotics](0478%20P1/Robotics) | 6.2 Robotics (deck, student booklet and answer key) |
-| P1 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) | 6.3 AI, expert systems and machine learning; concepts before exam practice, 17 distinct photographs and worked answers |
-| P2 | *(none yet)* | |
+### Chapter 2 · Data transmission
+
+| Paper | Section | Lesson |
+| --- | --- | --- |
+| P1 | 2.1 | [Packet Switching](0478%20P1/Packet%20Switching) |
+| P1 | 2.3 | [Symmetric and Asymmetric Encryption](0478%20P1/Symmetric%20and%20Asymmetric%20Encryption) — purpose, plaintext/ciphertext, shared secrets, recipient public/private keys, practice and worked feedback |
+
+### Chapter 6 · Automated and emerging technologies
+
+| Paper | Section | Lesson |
+| --- | --- | --- |
+| P1 | 6.1 | [Automated Systems](0478%20P1/Automated%20Systems) |
+| P1 | 6.2 | [Robotics](0478%20P1/Robotics) — slides, booklet and teacher key |
+| P1 | 6.3 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) — concepts before exam practice, 17 distinct photographs and worked answers |
+
+Paper 2 materials have not been added yet.
 
 ## 9618 AS & A Level
 
-| Paper | Lesson | Year | Syllabus |
-|---|---|---|---|
-| P1 | [Topologies and Cloud](9618%20P1/Topologies%20and%20Cloud) | Y12 | 2.1 Networks: topologies, public and private cloud |
-| P1 | [Wired and Wireless](9618%20P1/Wired%20and%20Wireless) | Y12 | 2.1.5 Wired and wireless networking (~30 min) |
-| P1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 | 2.1.6 LAN hardware (switch, server, NIC, WNIC, WAP, cables, bridge, repeater) and the router |
-| P4 | [Queues](9618%20P4/Queues) | Y13 | ADTs: queues (original lesson) |
-| P4 | [Stacks](9618%20P4/Stacks) | Y13 | ADTs: stacks (VB.NET) |
-| P4 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 | ADTs: linked lists (VB.NET) |
-| P4 | [Binary Trees](9618%20P4/Binary%20Trees) | Y13 | ADTs: binary trees (VB.NET) |
-| P4 | [Tree Traversals](9618%20P4/Tree%20Traversals) | Y13 | Follow-up to Binary Trees: pre/in/post-order by hand, tracing recursion with a call stack, uses of binary trees (also covers Paper 3 tree and recursion questions) |
+### Chapter 2 · Communication
 
-## Skill
+| Paper | Section | Lesson | Year |
+| --- | --- | --- | --- |
+| P1 | 2.1 | [Topologies and Cloud](9618%20P1/Topologies%20and%20Cloud) | Y12 |
+| P1 | 2.1 | [Wired and Wireless](9618%20P1/Wired%20and%20Wireless) | Y12 |
+| P1 | 2.1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 |
 
-[`skills/comp-sci-lesson-maker`](skills/comp-sci-lesson-maker) is the Claude skill used to make these lessons. It includes the source (SKILL.md, scripts, references and worked examples) and the packaged `comp-sci-lesson-maker.skill`, ready to upload to Claude.
+### Chapter 19 · Computational thinking and problem-solving
+
+| Paper | Section | Lesson | Year |
+| --- | --- | --- | --- |
+| P4 | 19.1 | [Queues](9618%20P4/Queues) | Y13 |
+| P4 | 19.1 | [Stacks](9618%20P4/Stacks) | Y13 |
+| P4 | 19.1 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 |
+| P4 | 19.1 | [Binary Trees](9618%20P4/Binary%20Trees) | Y13 |
+| P4 | 19.1 / 19.2 | [Tree Traversals](9618%20P4/Tree%20Traversals) — traversal, recursion and call stacks; also supports Paper 3 | Y13 |
+
+## Topic organisation
+
+Each lesson folder has a `lesson.json` declaring its primary chapter and section references. [syllabus-topics.json](syllabus-topics.json) defines all chapters, including 0478 chapter 1 Data representation, for future additions. The library shows topic choices for the materials available under the selected syllabus/paper. Lesson folders and IDs remain stable so existing links continue to work.
+
+The numbering follows the [0478 2026–2028 syllabus](https://www.cambridgeinternational.org/Images/697167-2026-2028-syllabus.pdf) and [9618 2026 syllabus](https://www.cambridgeinternational.org/Images/697372-2026-syllabus.pdf). A Level ADT algorithms belong to 19.1; recursion also belongs to 19.2.
+
+## Lesson-making skill
+
+[skills/comp-sci-lesson-maker](skills/comp-sci-lesson-maker) contains the lesson-making instructions, helpers, references and packaged skill.
 
 ## Web viewer
 
-The [lesson viewer](viewer/README.md) provides browser previews of slides, worksheets and student booklets, with search, syllabus/paper filters, and original-file downloads. Office files are converted to PDFs during the build. Teacher answer keys are excluded from the published site.
+The [viewer guide](viewer/README.md) describes chapter grouping, search, filters, previews, original downloads, fullscreen and clicker controls. Office materials are converted to PDF during the build. Revised previews use versioned URLs to avoid stale browser copies.
 
-Build with `python3 scripts/build_viewer.py`; see the viewer guide for local use and GitHub Pages deployment through the included Actions workflow.
+Build with `python3 scripts/build_viewer.py`. The included GitHub Actions workflow publishes updates to GitHub Pages automatically when lesson or viewer files change.
