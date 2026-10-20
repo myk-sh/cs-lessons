@@ -1,0 +1,15 @@
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\bin\Debug\net10.0\Check.exe
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\bin\Debug\net10.0\Check.deps.json
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\bin\Debug\net10.0\Check.runtimeconfig.json
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\bin\Debug\net10.0\Check.dll
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\bin\Debug\net10.0\Check.pdb
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.AssemblyInfoInputs.cache
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.AssemblyInfo.vb
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.vbproj.CoreCompileInputs.cache
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.sourcelink.json
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.dll
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\refint\Check.dll
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.pdb
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\Check.genruntimeconfig.cache
+C:\Users\mykhailo_sh\Documents\GitHub\cs-lessons\9618 P4\Binary Trees Follow Up\.build\vb-check\obj\Debug\net10.0\ref\Check.dll
