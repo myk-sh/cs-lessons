@@ -25,26 +25,14 @@ Paper 2 materials have not been added yet.
 
 ## 9618 AS & A Level
 
-<<<<<<< Updated upstream
 ### Chapter 2 · Communication
-=======
-| Paper | Lesson | Year | Syllabus |
-|---|---|---|---|
-| P1 | [Topologies and Cloud](9618%20P1/Topologies%20and%20Cloud) | Y12 | 2.1 Networks: topologies, public and private cloud |
-| P1 | [Wired and Wireless](9618%20P1/Wired%20and%20Wireless) | Y12 | 2.1.5 Wired and wireless networking (~30 min) |
-| P1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 | 2.1.6 LAN hardware (switch, server, NIC, WNIC, WAP, cables, bridge, repeater) and the router |
-| P4 | [Queues](9618%20P4/Queues) | Y13 | ADTs: queues (original lesson) |
-| P4 | [Stacks](9618%20P4/Stacks) | Y13 | ADTs: stacks (VB.NET) |
-| P4 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 | ADTs: linked lists (VB.NET) |
-| P4 | [Binary Trees](9618%20P4/Binary%20Trees) | Y13 | ADTs: binary trees (VB.NET) |
-| P4 | [Binary Trees Follow Up](9618%20P4/Binary%20Trees%20Follow%20Up) | Y13 | Drawing trees, array pointers and scaffolded recursive traversal; optional records, no OOP |
->>>>>>> Stashed changes
 
 | Paper | Section | Lesson | Year |
 | --- | --- | --- | --- |
 | P1 | 2.1 | [Topologies and Cloud](9618%20P1/Topologies%20and%20Cloud) | Y12 |
 | P1 | 2.1 | [Wired and Wireless](9618%20P1/Wired%20and%20Wireless) | Y12 |
 | P1 | 2.1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 |
+| P1 | 2.1 | [The Internet](9618%20P1/The%20Internet) — bit streaming, internet vs WWW, internet hardware, IP addresses and subnetting, URLs and DNS, with a network hardware recap | Y12 |
 
 ### Chapter 19 · Computational thinking and problem-solving
 
@@ -54,6 +42,7 @@ Paper 2 materials have not been added yet.
 | P4 | 19.1 | [Stacks](9618%20P4/Stacks) | Y13 |
 | P4 | 19.1 | [Linked Lists](9618%20P4/Linked%20Lists) | Y13 |
 | P4 | 19.1 | [Binary Trees](9618%20P4/Binary%20Trees) | Y13 |
+| P4 | 19.1 | [Binary Trees Follow Up](9618%20P4/Binary%20Trees%20Follow%20Up) — drawing trees, array pointers and scaffolded recursive traversal | Y13 |
 | P4 | 19.1 / 19.2 | [Tree Traversals](9618%20P4/Tree%20Traversals) — traversal, recursion and call stacks; also supports Paper 3 | Y13 |
 
 ## Topic organisation
