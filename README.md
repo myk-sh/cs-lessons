@@ -45,6 +45,12 @@ Paper 2 materials have not been added yet.
 | P4 | 19.1 | [Binary Trees Follow Up](9618%20P4/Binary%20Trees%20Follow%20Up) — drawing trees, array pointers and scaffolded recursive traversal | Y13 |
 | P4 | 19.1 / 19.2 | [Tree Traversals](9618%20P4/Tree%20Traversals) — traversal, recursion and call stacks; also supports Paper 3 | Y13 |
 
+### Chapter 20 · Further programming
+
+| Paper | Section | Lesson | Year |
+| --- | --- | --- | --- |
+| P4 | 20.1 | [Classes](9618%20P4/Classes) — programming paradigms, then a first lesson on classes and objects in VB.NET; also supports Paper 3 | Y13 |
+
 ## Topic organisation
 
 Each lesson folder has a `lesson.json` declaring its primary chapter and section references. [syllabus-topics.json](syllabus-topics.json) defines all chapters, including 0478 chapter 1 Data representation, for future additions. The library shows topic choices for the materials available under the selected syllabus/paper. Lesson folders and IDs remain stable so existing links continue to work.
