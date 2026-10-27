@@ -21,7 +21,11 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | P1 | 6.2 | [Robotics](0478%20P1/Robotics) — slides, booklet and teacher key |
 | P1 | 6.3 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) — concepts before exam practice, 17 distinct photographs and worked answers |
 
-Paper 2 materials have not been added yet.
+### Chapter 8 · Programming
+
+| Paper | Section | Lesson |
+| --- | --- | --- |
+| P2 | 8.1 | [Programming Recall](0478%20P2/Programming%20Recall) — Year 10 recap in 0478 pseudocode: data types, selection, loops, counting and totalling, trace tables, flowcharts, finding errors, PDLC; real 2018-2025 Paper 2 questions |
 
 ## 9618 AS & A Level
 
