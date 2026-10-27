@@ -26,6 +26,7 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | Paper | Section | Lesson |
 | --- | --- | --- |
 | P2 | 8.1 | [Programming Recall](0478%20P2/Programming%20Recall) — Year 10 recap in 0478 pseudocode: data types, selection, loops, counting and totalling, trace tables, flowcharts, finding errors, PDLC; real 2018-2025 Paper 2 questions |
+| P2 | 8.2 | [Arrays and Linear Search](0478%20P2/Arrays%20and%20Linear%20Search) — 1D arrays, totalling, counting, max/min with ties and linear search; pseudocode then VB.NET with starter files, examiner-report errors and 15-mark-style scenarios (no 2D arrays, files or subroutines) |
 
 ## 9618 AS & A Level
 
