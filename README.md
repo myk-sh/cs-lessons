@@ -55,6 +55,7 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | Paper | Section | Lesson | Year |
 | --- | --- | --- | --- |
 | P4 | 20.1 | [Classes](9618%20P4/Classes) — programming paradigms, then a first lesson on classes and objects in VB.NET; also supports Paper 3 | Y13 |
+| P4 | 20.1 | [Classes 2](9618%20P4/Classes%202) — inheritance, polymorphism, overloading, containment and a binary tree built with classes; also supports Paper 3 | Y13 |
 
 ## Topic organisation
 
