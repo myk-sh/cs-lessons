@@ -39,6 +39,12 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | P1 | 2.1 | [Network Hardware](9618%20P1/Network%20Hardware) | Y12 |
 | P1 | 2.1 | [The Internet](9618%20P1/The%20Internet) — bit streaming, internet vs WWW, internet hardware, IP addresses and subnetting, URLs and DNS, with a network hardware recap | Y12 |
 
+### Chapter 3 · Hardware
+
+| Paper | Section | Lesson | Year |
+| --- | --- | --- | --- |
+| P1 | 3.1 | [Hardware 1](9618%20P1/Hardware%201) — memory and storage, RAM and ROM, SRAM and DRAM, PROM/EPROM/EEPROM, embedded systems, with photos | Y12 |
+
 ### Chapter 19 · Computational thinking and problem-solving
 
 | Paper | Section | Lesson | Year |
