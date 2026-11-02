@@ -44,6 +44,7 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | Paper | Section | Lesson | Year |
 | --- | --- | --- | --- |
 | P1 | 3.1 | [Hardware 1](9618%20P1/Hardware%201) — memory and storage, RAM and ROM, SRAM and DRAM, PROM/EPROM/EEPROM, embedded systems, with photos | Y12 |
+| P1 | 3.1 | [Hardware 2](9618%20P1/Hardware%202) — magnetic hard disk, solid state (flash) memory, optical discs and buffers, with photos | Y12 |
 
 ### Chapter 19 · Computational thinking and problem-solving
 
