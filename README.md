@@ -21,6 +21,12 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | P1 | 6.2 | [Robotics](0478%20P1/Robotics) — slides, booklet and teacher key |
 | P1 | 6.3 | [Artificial Intelligence](0478%20P1/Artificial%20Intelligence) — concepts before exam practice, 17 distinct photographs and worked answers |
 
+### Chapter 7 · Algorithm design and problem-solving
+
+| Paper | Section | Lesson |
+| --- | --- | --- |
+| P2 | 7 | [Trace Tables](0478%20P2/Trace%20Tables) — Year 10: dry runs and trace tables for pseudocode and flowcharts; input/output, selection, loops, totalling, counting, max/min (no arrays); real 2023-2025 Paper 2 questions and a predict-then-run VB.NET task |
+
 ### Chapter 8 · Programming
 
 | Paper | Section | Lesson |
