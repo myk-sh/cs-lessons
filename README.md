@@ -35,6 +35,17 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | P2 | 8.1 | [Pseudocode to VB.NET](0478%20P2/Pseudocode%20to%20VB.NET) — Year 10: flowchart to pseudocode recap, first VB.NET (variables, constants, input/output, operators, IF), why VB.NET rather than Python with side-by-side code, starter files and real Paper 2 questions |
 | P2 | 8.2 | [Arrays and Linear Search](0478%20P2/Arrays%20and%20Linear%20Search) — 1D arrays, totalling, counting, max/min with ties and linear search; pseudocode then VB.NET with starter files, examiner-report errors and 15-mark-style scenarios (no 2D arrays, files or subroutines) |
 
+### Year 11 practice exam revision
+
+Four revision lessons covering every concept in the Year 11 practice exam (Papers 1 and 2), using real Cambridge questions that are not in the practice papers, plus exam-style questions. Students track progress with the shared 0478 tracker.
+
+| Paper | Chapters | Lesson |
+| --- | --- | --- |
+| P1 | 1, 2 | [Revision 1 Data and Transmission](0478%20P1/Revision%201%20Data%20and%20Transmission) — number systems, shifts, two's complement, packets, transmission methods, error detection, encryption |
+| P1 | 3, 4, 5 | [Revision 2 CPU Languages and Internet](0478%20P1/Revision%202%20CPU%20Languages%20and%20Internet) — CPU and FDE cycle, performance, languages and translators, IDEs, browsers, DNS, cookies, IP/MAC, cyber security |
+| P1/P2 | 6, 10 | [Revision 3 Automated Systems AI and Logic](0478%20P1/Revision%203%20Automated%20Systems%20AI%20and%20Logic) — automated systems, robots, AI and expert systems, logic gates, circuits and truth tables |
+| P2 | 7, 8 | [Revision 4 Algorithms and Programming](0478%20P2/Revision%204%20Algorithms%20and%20Programming) — PDLC, declarations, procedures and functions, DIV/MOD, strings, validation and verification, test data, errors, tracing, flowcharts |
+
 ## 9618 AS & A Level
 
 ### Chapter 2 · Communication
