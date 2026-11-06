@@ -82,6 +82,7 @@ Four revision lessons for Year 11 before the November exams, using real Cambridg
 | --- | --- | --- | --- |
 | P4 | 20.1 | [Classes](9618%20P4/Classes) — programming paradigms, then a first lesson on classes and objects in VB.NET; also supports Paper 3 | Y13 |
 | P4 | 20.1 | [Classes 2](9618%20P4/Classes%202) — inheritance, polymorphism, overloading, containment and a binary tree built with classes; also supports Paper 3 | Y13 |
+| P4 | 20.2 | [Files and Exceptions](9618%20P4/Files%20and%20Exceptions) — serial, sequential and random files, reading/writing/appending text files in VB.NET, Try...Catch, SEEK/GETRECORD/PUTRECORD pseudocode; data files for Task 6 included; also supports Paper 3 | Y13 |
 
 ## Topic organisation
 
