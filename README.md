@@ -26,6 +26,7 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | Paper | Section | Lesson |
 | --- | --- | --- |
 | P2 | 7 | [Trace Tables](0478%20P2/Trace%20Tables) — Year 10: dry runs and trace tables for pseudocode and flowcharts; input/output, selection, loops, totalling, counting, max/min (no arrays); real 2023-2025 Paper 2 questions and a predict-then-run VB.NET task |
+| P2 | 7 | [Trace Tables Exam Questions](0478%20P2/Trace%20Tables%20Exam%20Questions) — Year 10: 67-mark exam-question worksheet on trace tables; FOR, WHILE and REPEAT loops, nested IF and CASE, 1D arrays, pseudocode and flowcharts (no bubble sort; mark scheme is teacher-only) |
 
 ### Chapter 8 · Programming
 
