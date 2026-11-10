@@ -36,6 +36,12 @@ Each lesson has slides, a worksheet, a separate teacher answer key and a student
 | P2 | 8.1 | [Pseudocode to VB.NET](0478%20P2/Pseudocode%20to%20VB.NET) — Year 10: flowchart to pseudocode recap, first VB.NET (variables, constants, input/output, operators, IF), why VB.NET rather than Python with side-by-side code, starter files and real Paper 2 questions |
 | P2 | 8.2 | [Arrays and Linear Search](0478%20P2/Arrays%20and%20Linear%20Search) — 1D arrays, totalling, counting, max/min with ties and linear search; pseudocode then VB.NET with starter files, examiner-report errors and 15-mark-style scenarios (no 2D arrays, files or subroutines) |
 
+### Year 10 revision
+
+| Paper | Chapters | Resource |
+|---|---|---|
+| P1 + P2 | 1, 2, 7 | [Year 10 Revision Paper](0478%20P1/Year%2010%20Revision%20Paper) — 114-mark exam-style paper of real 0478 questions: number systems, hex, shifts, two's complement, text/sound/image and compression, packets and packet switching, transmission methods, check digits; PDLC, structure diagrams, flowcharts, pseudocode, trace tables and a first look at 1D arrays (full and one-page mark schemes are teacher-only) |
+
 ### Year 11 exam revision
 
 Four revision lessons for Year 11 before the November exams, using real Cambridge questions plus exam-style questions. Students track their progress with the 0478 tracker.
