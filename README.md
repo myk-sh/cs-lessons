@@ -70,6 +70,7 @@ Four revision lessons for Year 11 before the November exams, using real Cambridg
 | --- | --- | --- | --- |
 | P1 | 3.1 | [Hardware 1](9618%20P1/Hardware%201) — memory and storage, RAM and ROM, SRAM and DRAM, PROM/EPROM/EEPROM, embedded systems, with photos | Y12 |
 | P1 | 3.1 | [Hardware 2](9618%20P1/Hardware%202) — magnetic hard disk, solid state (flash) memory, optical discs and buffers, with photos | Y12 |
+| P1 | 3.1 | [Hardware 3](9618%20P1/Hardware%203) — IA Term 1B review (two's complement, file sizes, two-point answers), then laser and 3D printers, microphones and speakers with ADC/DAC, touchscreens, VR headsets, and monitoring and control systems with sensors, actuators and feedback | Y12 |
 | P1 | 1.1–3.1 | [Paper 1 Practice (Ch1-3.1)](9618%20P1/Paper%201%20Practice%20(Ch1-3.1)) — 127-mark past paper practice on data representation, multimedia, compression, networks, the internet and hardware (mark scheme is teacher-only) | Y12 |
 
 ### Chapter 19 · Computational thinking and problem-solving
